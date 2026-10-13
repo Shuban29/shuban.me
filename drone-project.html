@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Quadcopter Drone CAD Project | Shuban Singh Singraur</title>
+    <meta name="description" content="Quadcopter Drone Assembly: SolidWorks 3D CAD modeling, 2D GD&T orthographic drawings, Bill of Materials (BOM), and Center of Gravity analysis." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="sources/style.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://uploads-ssl.webflow.com/64c29599af562adb656080df/css/sister-mary-89119b4fbd322e7c0ecc71d510c.webflow.fde385c36.min.css" rel="stylesheet" type="text/css" />
+
+    <link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230080ff'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-weight='900' font-size='20' fill='%23ffffff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
+
+    <style>
+        :root {
+            --ff1: 'Athletics', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --ff2: 'Tuskergrotesk', Impact, 'Arial Black', sans-serif;
+            --accent-blue: #0080ff;
+            --accent-cyan: #00e5ff;
+            --accent-glow: rgba(0, 128, 255, 0.4);
+            --bg-dark: #050614;
+            --card-bg: rgba(255, 255, 255, 0.025);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-hover-border: rgba(0, 128, 255, 0.4);
+            --mw1: 82rem;
+            --pp1: 2rem;
+        }
+
+        html {
+            scroll-behavior: smooth !important;
+        }
+
+        body {
+            background-color: var(--bg-dark) !important;
+            color: #ffffff !important;
+            font-family: var(--ff1), sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .topographic-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('./sources/topography.svg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .fader-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 15%, rgba(0, 128, 255, 0.09) 0%, rgba(5, 6, 20, 0.95) 75%, #050614 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* HEADER */
+        .case_nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.15rem 0;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(5, 6, 20, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .case_nav_container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: var(--mw1);
+            margin: 0 auto;
+            padding: 0 var(--pp1);
+            box-sizing: border-box;
+        }
+
+        .nav_logo_link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.85rem;
+            text-decoration: none;
+            color: #ffffff;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            user-select: none;
+        }
+
+        .nav_logo_link:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        .brand_title {
+            font-family: var(--ff2), Impact, 'Arial Black', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .brand_dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            box-shadow: 0 0 8px var(--accent-blue);
+            flex-shrink: 0;
+        }
+
+        .brand_sub {
+            font-family: var(--ff1), -apple-system, sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #7ba3cc;
+            line-height: 1;
+        }
+
+        .nav_actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav_back_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 9999px;
+            color: #ffffff;
+            font-family: var(--ff1);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .nav_back_btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(-2px);
+        }
+
+        .resume_download_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.55rem 1.25rem;
+            background: rgba(0, 128, 255, 0.12);
+            border: 1px solid rgba(0, 128, 255, 0.6);
+            border-radius: 9999px;
+            color: #ffffff !important;
+            font-family: var(--ff1);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 15px rgba(0, 128, 255, 0.15);
+        }
+
+        .resume_download_btn:hover {
+            background: var(--accent-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 128, 255, 0.45);
+        }
+
+        /* MAIN CONTENT */
+        .case_main {
+            position: relative;
+            z-index: 1;
+            padding-top: 8rem;
+            padding-bottom: 6rem;
+            max-width: var(--mw1);
+            margin: 0 auto;
+            padding-left: var(--pp1);
+            padding-right: var(--pp1);
+            box-sizing: border-box;
+        }
+
+        /* HERO */
+        .case_hero {
+            margin-bottom: 4rem;
+        }
+
+        .case_badge_pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(0, 128, 255, 0.1);
+            border: 1px solid rgba(0, 128, 255, 0.3);
+            border-radius: 9999px;
+            font-family: var(--ff1);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #70b5ff;
+            margin-bottom: 1.5rem;
+        }
+
+        .case_badge_dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #00e5ff;
+            box-shadow: 0 0 8px #00e5ff;
+        }
+
+        .case_title_main {
+            font-family: var(--ff2), sans-serif;
+            font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.02;
+            letter-spacing: -0.01em;
+            margin: 0 0 1rem 0;
+            color: #ffffff;
+        }
+
+        .case_title_sub {
+            font-family: var(--ff1), sans-serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 500;
+            color: #9eccff;
+            margin: 0 0 2rem 0;
+            line-height: 1.4;
+        }
+
+        .case_meta_grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            margin: 2.5rem 0 3.5rem 0;
+        }
+
+        @media (max-width: 900px) {
+            .case_meta_grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .case_meta_grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .meta_card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .meta_label {
+            font-family: var(--ff1);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #70b5ff;
+            margin-bottom: 0.4rem;
+        }
+
+        .meta_val {
+            font-family: var(--ff1);
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.35;
+        }
+
+        /* SECTION NAV PILLS */
+        .section_nav_bar {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+        }
+
+        .section_pill {
+            padding: 0.65rem 1.25rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 9999px;
+            color: rgba(255, 255, 255, 0.85);
+            font-family: var(--ff1);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section_pill:hover {
+            background: rgba(0, 128, 255, 0.15);
+            border-color: var(--accent-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* MODULES */
+        .module_wrap {
+            margin-bottom: 5.5rem;
+            padding-top: 1rem;
+        }
+
+        .module_header {
+            display: flex;
+            align-items: baseline;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1.25rem;
+        }
+
+        .module_num {
+            font-family: var(--ff2);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--accent-blue);
+            line-height: 1;
+        }
+
+        .module_title {
+            font-family: var(--ff2);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .module_intro {
+            font-family: var(--ff1);
+            font-size: 1.12rem;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, 0.82);
+            max-width: 56rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* COLLAGE CARD */
+        .collage_card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .collage_card:hover {
+            border-color: var(--card-hover-border);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 128, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .collage_img_wrap {
+            position: relative;
+            background: #000000;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .collage_img_wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .collage_card:hover .collage_img_wrap img {
+            transform: scale(1.025);
+        }
+
+        .zoom_overlay {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(5, 6, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 9999px;
+            padding: 0.4rem 0.85rem;
+            font-family: var(--ff1);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s ease;
+        }
+
+        .collage_card:hover .zoom_overlay {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .collage_caption {
+            padding: 1.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(5, 6, 20, 0.5);
+        }
+
+        .caption_title {
+            font-family: var(--ff2);
+            font-size: 1.45rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #ffffff;
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .caption_badge {
+            font-family: var(--ff1);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #00e5ff;
+            background: rgba(0, 229, 255, 0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(0, 229, 255, 0.25);
+        }
+
+        .caption_text {
+            font-family: var(--ff1);
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+        }
+
+        .collage_grid_2col {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .collage_grid_equal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 991px) {
+            .collage_grid_2col,
+            .collage_grid_equal {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* TECH SPEC BOX */
+        .tech_spec_box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 2rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .spec_header {
+            font-family: var(--ff2);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.75rem;
+            margin: 0;
+        }
+
+        .spec_list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.15rem;
+        }
+
+        .spec_item {
+            position: relative;
+            padding-left: 1.6rem;
+            font-family: var(--ff1);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .spec_item::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-blue);
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .spec_item strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* BOM TABLE */
+        .bom_table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--ff1);
+            font-size: 0.88rem;
+            margin-top: 1rem;
+        }
+
+        .bom_table th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 128, 255, 0.15);
+            color: #70b5ff;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            border-bottom: 1px solid rgba(0, 128, 255, 0.3);
+        }
+
+        .bom_table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .bom_table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+            color: #ffffff;
+        }
+
+        /* METRIC HIGHLIGHT */
+        .metric_row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .metric_row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .metric_chip {
+            background: rgba(0, 128, 255, 0.07);
+            border: 1px solid rgba(0, 128, 255, 0.25);
+            border-radius: 12px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+
+        .metric_chip_val {
+            font-family: var(--ff2);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #00e5ff;
+            line-height: 1;
+            margin-bottom: 0.35rem;
+        }
+
+        .metric_chip_label {
+            font-family: var(--ff1);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* LIGHTBOX MODAL */
+        .lightbox_modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 3, 10, 0.94);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox_modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox_content {
+            position: relative;
+            max-width: 94vw;
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lightbox_img {
+            max-width: 92vw;
+            max-height: 80vh;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+            object-fit: contain;
+        }
+
+        .lightbox_caption_bar {
+            margin-top: 1rem;
+            background: rgba(5, 6, 20, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            padding: 0.6rem 1.75rem;
+            font-family: var(--ff1);
+            font-size: 0.95rem;
+            color: #ffffff;
+            text-align: center;
+            max-width: 85vw;
+        }
+
+        .lightbox_close_btn {
+            position: absolute;
+            top: -2.5rem;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lightbox_close_btn:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            transform: scale(1.1);
+        }
+
+        /* FOOTER */
+        .case_footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 4rem;
+            margin-top: 6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .case_footer_links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .case_footer_link {
+            color: rgba(255, 255, 255, 0.7);
+            font-family: var(--ff1);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .case_footer_link:hover {
+            color: var(--accent-blue);
+        }
+
+        /* MOBILE RESPONSIVE OPTIMIZATION */
+        @media screen and (max-width: 768px) {
+            :root {
+                --pp1: 1.15rem;
+            }
+            .case_main {
+                padding-top: 6.5rem;
+                padding-bottom: 3.5rem;
+            }
+            .module_wrap {
+                margin-bottom: 3.5rem;
+            }
+            .module_title {
+                font-size: 1.65rem;
+            }
+            .module_num {
+                font-size: 1.65rem;
+            }
+            .collage_caption {
+                padding: 1.35rem;
+            }
+            .tech_spec_box {
+                padding: 1.35rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            :root {
+                --pp1: 1rem;
+            }
+            .case_nav {
+                padding: 0.85rem 0;
+            }
+            .brand_title {
+                font-size: 1.25rem;
+            }
+            .brand_sub {
+                font-size: 0.58rem;
+                letter-spacing: 0.14em;
+            }
+            .nav_actions {
+                gap: 0.4rem;
+            }
+            .nav_back_btn {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.72rem;
+            }
+            .nav_back_btn span {
+                display: none;
+            }
+            .nav_back_btn::after {
+                content: 'Back';
+            }
+            .resume_download_btn {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.72rem;
+            }
+            .case_main {
+                padding-top: 5.5rem;
+                padding-bottom: 2.5rem;
+            }
+            .case_hero {
+                margin-bottom: 2.5rem;
+            }
+            .case_title_main {
+                font-size: 1.95rem;
+                line-height: 1.1;
+                margin-bottom: 0.75rem;
+            }
+            .case_title_sub {
+                font-size: 0.98rem;
+                line-height: 1.5;
+                margin-bottom: 1.5rem;
+            }
+            .case_meta_grid {
+                gap: 0.75rem;
+                margin: 1.75rem 0 2rem 0;
+            }
+            .meta_card {
+                padding: 1rem 1.15rem;
+            }
+            .section_nav_bar {
+                gap: 0.4rem;
+                padding: 0.5rem;
+                margin-bottom: 2.5rem;
+            }
+            .section_pill {
+                padding: 0.45rem 0.85rem;
+                font-size: 0.75rem;
+            }
+            .module_header {
+                gap: 0.65rem;
+                margin-bottom: 1rem;
+                padding-bottom: 0.75rem;
+            }
+            .module_num {
+                font-size: 1.4rem;
+            }
+            .module_title {
+                font-size: 1.35rem;
+                line-height: 1.2;
+            }
+            .module_intro {
+                font-size: 0.92rem;
+                line-height: 1.55;
+                margin-bottom: 1.5rem;
+            }
+            .collage_caption {
+                padding: 1.15rem;
+            }
+            .caption_title {
+                font-size: 1.2rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.35rem;
+            }
+            .caption_text {
+                font-size: 0.88rem;
+                line-height: 1.55;
+            }
+            .tech_spec_box {
+                padding: 1.15rem;
+                border-radius: 14px;
+            }
+            .spec_header {
+                font-size: 1.25rem;
+            }
+            .spec_item {
+                font-size: 0.88rem;
+                padding-left: 1.2rem;
+                line-height: 1.55;
+            }
+            .metric_chip {
+                padding: 0.9rem 0.75rem;
+            }
+            .metric_chip_val {
+                font-size: 1.6rem;
+            }
+            .bom_table th, .bom_table td {
+                padding: 0.6rem 0.65rem;
+                font-size: 0.8rem;
+            }
+            .case_footer {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.25rem;
+                margin-top: 3.5rem;
+                padding-top: 2rem;
+            }
+            .case_footer_links {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topographic-pattern"></div>
+    <div class="fader-gradient"></div>
+
+    <!-- STICKY CASE NAVIGATION BAR -->
+    <header class="case_nav">
+        <div class="case_nav_container">
+            <a href="index.html#top" class="nav_logo_link" aria-label="Home">
+                <span class="brand_title">SHUBAN</span>
+                <span class="brand_dot"></span>
+                <span class="brand_sub">AEROSPACE</span>
+            </a>
+
+            <div class="nav_actions">
+                <a href="index.html#projects" class="nav_back_btn" title="Back to Portfolio Projects">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back to Portfolio</span>
+                </a>
+
+                <a href="Shuban_Singh_Singraur_Resume.pdf" download="Shuban_Singh_Singraur_Resume.pdf" class="resume_download_btn" title="Download Shuban's Resume">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Resume</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN WRAPPER -->
+    <main class="case_main">
+        <!-- HERO -->
+        <section class="case_hero">
+            <div class="case_badge_pill">
+                <span class="case_badge_dot"></span>
+                <span>Independent CAD Engineering Project &bull; SolidWorks</span>
+            </div>
+
+            <h1 class="case_title_main">Quadcopter Drone Assembly</h1>
+            <p class="case_title_sub">
+                Aerospace Multi-Rotor Airframe: Multi-Body SolidWorks CAD, 2D GD&amp;T Orthographic Drawings &amp; Center of Gravity Analysis
+            </p>
+
+            <div class="case_meta_grid">
+                <div class="meta_card">
+                    <div class="meta_label">Role &amp; Scope</div>
+                    <div class="meta_val">Mechanical Design Lead &bull; Airframe CAD &amp; GD&amp;T</div>
+                </div>
+                <div class="meta_card">
+                    <div class="meta_label">Primary Software</div>
+                    <div class="meta_val">SolidWorks 3D CAD &bull; Assembly &amp; Motion</div>
+                </div>
+                <div class="meta_card">
+                    <div class="meta_label">Key Materials</div>
+                    <div class="meta_val">Carbon Fiber &bull; Al 7075-T6 &bull; POM Acetal &bull; Nylon 6/10</div>
+                </div>
+                <div class="meta_card">
+                    <div class="meta_label">Mass Center (CG)</div>
+                    <div class="meta_val">X: -0.10 mm &bull; Y: 888.42 mm &bull; Z: -0.11 mm</div>
+                </div>
+            </div>
+
+            <!-- JUMP PILLS -->
+            <nav class="section_nav_bar" aria-label="Section shortcuts">
+                <a href="#overview" class="section_pill">
+                    <span>01.</span> Airframe 3D CAD Model
+                </a>
+                <a href="#drawings" class="section_pill">
+                    <span>02.</span> 2D Orthographic Drawing (Sheet A3)
+                </a>
+                <a href="#exploded" class="section_pill">
+                    <span>03.</span> Exploded View &amp; Bill of Materials
+                </a>
+                <a href="#cg" class="section_pill">
+                    <span>04.</span> Center of Mass &amp; Stability
+                </a>
+                <a href="#presentation" class="section_pill" style="border-color: rgba(0, 128, 255, 0.5); color: #70b5ff;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download Drone Presentation (PPTX)
+                </a>
+            </nav>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 1: 3D CAD MODEL & AERODYNAMIC DESIGN -->
+        <!-- ========================================================================= -->
+        <section id="overview" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">01 //</span>
+                <h2 class="module_title">Airframe 3D CAD Architecture</h2>
+            </div>
+            <p class="module_intro">
+                High-performance multi-rotor quadcopter platform designed with an aerospace-grade hybrid carbon fiber and lightweight aluminum skeleton. Optimized for maximum torsional rigidity, high thrust-to-weight ratio, and clean component packaging.
+            </p>
+
+            <div class="collage_grid_2col">
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/drone/drone-render.png', 'Quadcopter Drone SolidWorks 3D Render - Full Assembly')">
+                        <img src="sources/drone/drone-render.png" alt="Quadcopter Drone 3D Assembly Render" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Fully Rendered SolidWorks Airframe</span>
+                            <span class="caption_badge">Full Assembly</span>
+                        </div>
+                        <p class="caption_text">
+                            Isometric render showcasing the quad-arm truss layout, central battery enclosure with custom Shuban debossing, ESC modules, four high-RPM brushless DC outrunner motors, and red polymer propellers.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="tech_spec_box">
+                    <h3 class="spec_header">Key Subsystems &amp; Functions</h3>
+                    <ul class="spec_list">
+                        <li class="spec_item">
+                            <strong>Truss Arms &amp; Chassis:</strong> Four lightweight CNC Aluminum 7075-T6 truss arms bolted to a Thornel VCB-20 carbon cloth base plate, resisting bending moments generated during high-speed maneuvers.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Propulsion System:</strong> Four high-RPM brushless motors paired with high-efficiency red nylon polymer propellers to deliver responsive collective lift and aggressive yaw authority.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Integrated Electronics Stack:</strong> Internal PCB distribution board fabricated from E-Glass fiber, routing high-amperage power between the centralized LiPo battery, ESCs, and flight controller.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Vibration Isolation:</strong> POM Acetal copolymer spacers and brass standoffs dampening motor harmonic frequencies to protect sensitive onboard IMU gyro sensors.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 2: 2D ORTHOGRAPHIC DRAWING (SHEET A3) -->
+        <!-- ========================================================================= -->
+        <section id="drawings" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">02 //</span>
+                <h2 class="module_title">2D Orthographic Technical Drawing (Sheet A3)</h2>
+            </div>
+            <p class="module_intro">
+                Manufacturing-ready engineering drawing created in SolidWorks following standard first-angle projection rules, complete with multi-plane cross-sections, isometric exploded view, and standard drawing block metadata.
+            </p>
+
+            <div class="collage_card">
+                <div class="collage_img_wrap" onclick="openLightbox('sources/drone/media/image3.png', 'Quadcopter Drone Orthographic Drawing Assembly - Sheet A3 Drawn by Shuban Singh Singraur')">
+                    <img src="sources/drone/media/image3.png" alt="Quadcopter Drone Orthographic Drawing Assembly Sheet A3" loading="lazy" style="background: #ffffff;" />
+                    <div class="zoom_overlay">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                        <span>Click to Inspect High-Res Drawing</span>
+                    </div>
+                </div>
+                <div class="collage_caption">
+                    <div class="caption_title">
+                        <span>A3 Production Drawing Package</span>
+                        <span class="caption_badge">Sheet 1 of 1 &bull; Scale 1:5</span>
+                    </div>
+                    <p class="caption_text">
+                        <strong>Drawing Metadata:</strong> Drawn by <em>SHUBAN SINGH SINGRAUR (16/12/25)</em>. Displays Top View, Front View, Right View, Cross-Sections B-B &amp; C-C, Isometric View, and Isometric Exploded View. Includes standard tolerance callouts and title block.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 3: EXPLODED VIEW & BILL OF MATERIALS (BOM) -->
+        <!-- ========================================================================= -->
+        <section id="exploded" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">03 //</span>
+                <h2 class="module_title">Exploded Assembly View &amp; Bill of Materials</h2>
+            </div>
+            <p class="module_intro">
+                Detailed CAD disassembly identifying all fasteners, structural plates, electronic modules, and propulsion components alongside aerospace material specifications.
+            </p>
+
+            <div class="collage_grid_equal">
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/drone/media/image4.png', 'SolidWorks Exploded View with Component Callouts')">
+                        <img src="sources/drone/media/image4.png" alt="Quadcopter Drone Exploded View in SolidWorks" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>CAD Exploded Stacking</span>
+                            <span class="caption_badge">12 Subsystems</span>
+                        </div>
+                        <p class="caption_text">
+                            Exploded rendering showing fastener stacks, upper/lower carbon plates, aluminum truss arm retention, and motor mounts.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- BILL OF MATERIALS TABLE -->
+                <div class="tech_spec_box">
+                    <h3 class="spec_header">Bill of Materials (BOM)</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="bom_table">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Part Description</th>
+                                    <th>Material Specification</th>
+                                    <th>Qty</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Drone Base</td>
+                                    <td>Thornel VCB-20 Carbon Cloth</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Drone Top Plate</td>
+                                    <td>Thornel VCB-20 Carbon Cloth</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Distribution Board</td>
+                                    <td>E-Glass Fiber</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Drone Arm</td>
+                                    <td>Aluminum Alloy 7075-T6 (SN)</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Propeller Spinner</td>
+                                    <td>Aluminum Alloy 7075-T6 (SN)</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Structural Spacer</td>
+                                    <td>POM Acetal Copolymer</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Electrical Connector</td>
+                                    <td>High-Conductivity Copper</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>8</td>
+                                    <td>Pillar Standoff</td>
+                                    <td>Aluminum Alloy 6063-T6</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>9</td>
+                                    <td>Propeller Fan</td>
+                                    <td>Nylon 6/10 Polymer</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>10</td>
+                                    <td>Motor Stator/Casing</td>
+                                    <td>Aluminum Alloy 6061-T6 (SS)</td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>11</td>
+                                    <td>Battery Enclosure</td>
+                                    <td>Aluminum Alloy 6061-T6 (SS)</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>12</td>
+                                    <td>Electrical Terminals</td>
+                                    <td>Beryllium Copper, UNS C17000</td>
+                                    <td>2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 4: CENTER OF MASS & STABILITY VERIFICATION -->
+        <!-- ========================================================================= -->
+        <section id="cg" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">04 //</span>
+                <h2 class="module_title">Center of Gravity (CG) &amp; Mass Analysis</h2>
+            </div>
+            <p class="module_intro">
+                Precise mass properties analysis evaluated in SolidWorks to ensure symmetrical weight distribution across the geometric center of thrust.
+            </p>
+
+            <div class="collage_grid_equal">
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/drone/media/image6.png', 'Center of Gravity Front Elevation View')">
+                        <img src="sources/drone/media/image6.png" alt="Quadcopter Drone Center of Gravity Front View" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Front Plane CG Alignment</span>
+                            <span class="caption_badge">Z-Axis Symmetry</span>
+                        </div>
+                        <p class="caption_text">
+                            Front elevation verifying that the vertical center of mass sits directly below the rotor plane, providing natural pendulum stability during forward flight.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/drone/media/image7.png', 'Center of Gravity Top Plan View')">
+                        <img src="sources/drone/media/image7.png" alt="Quadcopter Drone Center of Gravity Plan View" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Plan View Neutral Balance</span>
+                            <span class="caption_badge">X/Z Center Offset: &lt;0.1mm</span>
+                        </div>
+                        <p class="caption_text">
+                            Top plan view confirming near-zero lateral offset (X = -0.10 mm, Z = -0.11 mm), maximizing motor lifespan by equalizing power draw across all four ESC channels.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech_spec_box" style="margin-top: 2rem;">
+                <h3 class="spec_header">Computed CAD Mass Properties</h3>
+                <div class="metric_row">
+                    <div class="metric_chip">
+                        <div class="metric_chip_val">-0.10 mm</div>
+                        <div class="metric_chip_label">X-Axis Offset (Lateral)</div>
+                    </div>
+                    <div class="metric_chip">
+                        <div class="metric_chip_val">888.42 mm</div>
+                        <div class="metric_chip_label">Y-Axis Elevation (Vertical)</div>
+                    </div>
+                    <div class="metric_chip">
+                        <div class="metric_chip_val">-0.11 mm</div>
+                        <div class="metric_chip_label">Z-Axis Offset (Longitudinal)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- PRESENTATION DOWNLOAD SECTION -->
+        <!-- ========================================================================= -->
+        <section id="presentation" class="module_wrap" style="text-align: center; background: rgba(0, 128, 255, 0.03); border: 1px solid rgba(0, 128, 255, 0.15); border-radius: 24px; padding: 3.5rem 2rem;">
+            <div class="caption_badge" style="margin-bottom: 1rem;">Complete CAD Engineering Deck</div>
+            <h2 style="font-family: var(--ff2); font-size: 2.5rem; text-transform: uppercase; color: #ffffff; margin: 0 0 1rem 0;">Download Drone Presentation</h2>
+            <p style="font-family: var(--ff1); font-size: 1.05rem; color: rgba(255, 255, 255, 0.75); max-width: 38rem; margin: 0 auto 2.5rem auto; line-height: 1.7;">
+                Access the full Quadcopter Drone CAD deck including animated exploded views, material data sheets, and scale renderings.
+            </p>
+
+            <a href="sources/drone/Quadcopter_Drone_Presentation.pptx" download="Shuban_Singh_Quadcopter_Drone_Presentation.pptx" class="resume_download_btn" style="padding: 0.9rem 2.2rem; font-size: 0.95rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download Presentation (PPTX, 4.2 MB)</span>
+            </a>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="case_footer">
+            <div style="font-family: var(--ff1); font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
+                &copy; Shuban Singh Singraur &bull; Quadcopter Drone CAD Project
+            </div>
+            <div class="case_footer_links">
+                <a href="hill-climb-project.html" class="case_footer_link">&larr; Previous: Hill Climb Vehicle</a>
+                <a href="index.html#projects" class="case_footer_link">Portfolio Projects</a>
+                <a href="index.html#top" class="case_footer_link">&uarr; Back to Top</a>
+            </div>
+        </footer>
+    </main>
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightboxModal" class="lightbox_modal" onclick="closeLightbox(event)">
+        <div class="lightbox_content" onclick="event.stopPropagation()">
+            <button class="lightbox_close_btn" onclick="closeLightbox()" title="Close">&times;</button>
+            <img id="lightboxImg" class="lightbox_img" src="" alt="Enlarged view" />
+            <div id="lightboxCaption" class="lightbox_caption_bar"></div>
+        </div>
+    </div>
+
+    <script>
+        function openLightbox(src, caption) {
+            var modal = document.getElementById('lightboxModal');
+            var img = document.getElementById('lightboxImg');
+            var cap = document.getElementById('lightboxCaption');
+            img.src = src;
+            cap.innerText = caption;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            var modal = document.getElementById('lightboxModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>

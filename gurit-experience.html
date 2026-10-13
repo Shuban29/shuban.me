@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Gurit Wind R&amp;D Case Study | Shuban Singh Singraur</title>
+    <meta name="description" content="Fiber Reinforced Composites Case Study: Vacuum Resin Infusion (VARTM), Mechanical ASTM/ISO Testing, and SolidWorks FEA Laminate Simulation at Gurit Wind." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="sources/style.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://uploads-ssl.webflow.com/64c29599af562adb656080df/css/sister-mary-89119b4fbd322e7c0ecc71d510c.webflow.fde385c36.min.css" rel="stylesheet" type="text/css" />
+
+    <link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230080ff'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-weight='900' font-size='20' fill='%23ffffff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
+
+    <style>
+        :root {
+            --ff1: 'Athletics', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --ff2: 'Tuskergrotesk', Impact, 'Arial Black', sans-serif;
+            --accent-blue: #0080ff;
+            --accent-cyan: #00e5ff;
+            --accent-glow: rgba(0, 128, 255, 0.4);
+            --bg-dark: #050614;
+            --card-bg: rgba(255, 255, 255, 0.025);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-hover-border: rgba(0, 128, 255, 0.4);
+            --mw1: 82rem;
+            --pp1: 2rem;
+        }
+
+        html {
+            scroll-behavior: smooth !important;
+        }
+
+        body {
+            background-color: var(--bg-dark) !important;
+            color: #ffffff !important;
+            font-family: var(--ff1), sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* TOPOGRAPHY PATTERN BACKGROUND */
+        .topographic-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('./sources/topography.svg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .fader-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 20%, rgba(0, 128, 255, 0.08) 0%, rgba(5, 6, 20, 0.95) 75%, #050614 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* HEADER & NAVIGATION */
+        .case_nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.15rem 0;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(5, 6, 20, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .case_nav_container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: var(--mw1);
+            margin: 0 auto;
+            padding: 0 var(--pp1);
+            box-sizing: border-box;
+        }
+
+        .nav_logo_link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.85rem;
+            text-decoration: none;
+            color: #ffffff;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            user-select: none;
+        }
+
+        .nav_logo_link:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        .brand_title {
+            font-family: var(--ff2), Impact, 'Arial Black', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .brand_dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            box-shadow: 0 0 8px var(--accent-blue);
+            flex-shrink: 0;
+        }
+
+        .brand_sub {
+            font-family: var(--ff1), -apple-system, sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #7ba3cc;
+            line-height: 1;
+        }
+
+        .nav_actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav_back_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 9999px;
+            color: #ffffff;
+            font-family: var(--ff1);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .nav_back_btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(-2px);
+        }
+
+        .resume_download_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.55rem 1.25rem;
+            background: rgba(0, 128, 255, 0.12);
+            border: 1px solid rgba(0, 128, 255, 0.6);
+            border-radius: 9999px;
+            color: #ffffff !important;
+            font-family: var(--ff1);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 15px rgba(0, 128, 255, 0.15);
+        }
+
+        .resume_download_btn:hover {
+            background: var(--accent-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 128, 255, 0.45);
+        }
+
+        /* PAGE CONTAINER */
+        .case_main {
+            position: relative;
+            z-index: 1;
+            padding-top: 8rem;
+            padding-bottom: 6rem;
+            max-width: var(--mw1);
+            margin: 0 auto;
+            padding-left: var(--pp1);
+            padding-right: var(--pp1);
+            box-sizing: border-box;
+        }
+
+        /* HERO HEADER */
+        .case_hero {
+            margin-bottom: 4rem;
+        }
+
+        .case_badge_pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(0, 128, 255, 0.1);
+            border: 1px solid rgba(0, 128, 255, 0.3);
+            border-radius: 9999px;
+            font-family: var(--ff1);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #70b5ff;
+            margin-bottom: 1.5rem;
+        }
+
+        .case_badge_dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #00e5ff;
+            box-shadow: 0 0 8px #00e5ff;
+        }
+
+        .case_title_main {
+            font-family: var(--ff2), sans-serif;
+            font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.02;
+            letter-spacing: -0.01em;
+            margin: 0 0 1rem 0;
+            color: #ffffff;
+        }
+
+        .case_title_sub {
+            font-family: var(--ff1), sans-serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 500;
+            color: #9eccff;
+            margin: 0 0 2rem 0;
+            line-height: 1.4;
+        }
+
+        .case_meta_grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            margin: 2.5rem 0 3.5rem 0;
+        }
+
+        @media (max-width: 900px) {
+            .case_meta_grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .case_meta_grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .meta_card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .meta_label {
+            font-family: var(--ff1);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #70b5ff;
+            margin-bottom: 0.4rem;
+        }
+
+        .meta_val {
+            font-family: var(--ff1);
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.35;
+        }
+
+        /* SECTION NAV PILLS */
+        .section_nav_bar {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+        }
+
+        .section_pill {
+            padding: 0.65rem 1.25rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 9999px;
+            color: rgba(255, 255, 255, 0.85);
+            font-family: var(--ff1);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section_pill:hover {
+            background: rgba(0, 128, 255, 0.15);
+            border-color: var(--accent-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* COLLAGE & STORY MODULES */
+        .module_wrap {
+            margin-bottom: 5.5rem;
+            padding-top: 1rem;
+        }
+
+        .module_header {
+            display: flex;
+            align-items: baseline;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1.25rem;
+        }
+
+        .module_num {
+            font-family: var(--ff2);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--accent-blue);
+            line-height: 1;
+        }
+
+        .module_title {
+            font-family: var(--ff2);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .module_intro {
+            font-family: var(--ff1);
+            font-size: 1.12rem;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, 0.82);
+            max-width: 54rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* COLLAGE GRID LAYOUTS */
+        .collage_grid_2col {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .collage_grid_equal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 991px) {
+            .collage_grid_2col,
+            .collage_grid_equal {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* COLLAGE IMAGE CARD */
+        .collage_card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .collage_card:hover {
+            border-color: var(--card-hover-border);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 128, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .collage_img_wrap {
+            position: relative;
+            background: #000000;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .collage_img_wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .collage_card:hover .collage_img_wrap img {
+            transform: scale(1.025);
+        }
+
+        .zoom_overlay {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(5, 6, 20, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 9999px;
+            padding: 0.4rem 0.85rem;
+            font-family: var(--ff1);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0.85;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
+            pointer-events: none;
+        }
+
+        .collage_card:hover .zoom_overlay {
+            opacity: 1;
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .collage_caption {
+            padding: 1.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(5, 6, 20, 0.5);
+        }
+
+        .caption_title {
+            font-family: var(--ff2);
+            font-size: 1.45rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #ffffff;
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .caption_badge {
+            font-family: var(--ff1);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #00e5ff;
+            background: rgba(0, 229, 255, 0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(0, 229, 255, 0.25);
+        }
+
+        .caption_text {
+            font-family: var(--ff1);
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+        }
+
+        /* TECHNICAL SPEC / DETAIL BOXES */
+        .tech_spec_box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 2rem;
+            height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .spec_header {
+            font-family: var(--ff2);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.75rem;
+            margin: 0;
+        }
+
+        .spec_list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.15rem;
+        }
+
+        .spec_item {
+            position: relative;
+            padding-left: 1.6rem;
+            font-family: var(--ff1);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .spec_item::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-blue);
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .spec_item strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* METRIC HIGHLIGHT CHIPS */
+        .metric_row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .metric_row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .metric_chip {
+            background: rgba(0, 128, 255, 0.07);
+            border: 1px solid rgba(0, 128, 255, 0.25);
+            border-radius: 12px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+
+        .metric_chip_val {
+            font-family: var(--ff2);
+            font-size: 2rem;
+            font-weight: 900;
+            color: #00e5ff;
+            line-height: 1;
+            margin-bottom: 0.35rem;
+        }
+
+        .metric_chip_label {
+            font-family: var(--ff1);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* FORMULA / MATH BOX */
+        .formula_box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed rgba(0, 128, 255, 0.4);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: #a4cdfc;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 1rem 0;
+        }
+
+        .formula_title {
+            font-family: var(--ff1);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #70b5ff;
+            margin-bottom: 0.5rem;
+        }
+
+        /* COMPARISON STRESS-STRAIN CHART (SVG EMBED) */
+        .chart_container {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* LIGHTBOX MODAL */
+        .lightbox_modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 3, 10, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox_modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox_content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lightbox_img {
+            max-width: 85vw;
+            max-height: 75vh;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            object-fit: contain;
+        }
+
+        .lightbox_caption_bar {
+            margin-top: 1rem;
+            background: rgba(5, 6, 20, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            padding: 0.6rem 1.5rem;
+            font-family: var(--ff1);
+            font-size: 0.95rem;
+            color: #ffffff;
+            text-align: center;
+            max-width: 80vw;
+        }
+
+        .lightbox_close_btn {
+            position: absolute;
+            top: -2.5rem;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lightbox_close_btn:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            transform: scale(1.1);
+        }
+
+        /* BOTTOM CTA & FOOTER */
+        .case_footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 4rem;
+            margin-top: 6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .case_footer_links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .case_footer_link {
+            color: rgba(255, 255, 255, 0.7);
+            font-family: var(--ff1);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .case_footer_link:hover {
+            color: var(--accent-blue);
+        }
+
+        /* MOBILE RESPONSIVE OPTIMIZATION */
+        @media screen and (max-width: 768px) {
+            :root {
+                --pp1: 1.15rem;
+            }
+            .case_main {
+                padding-top: 6.5rem;
+                padding-bottom: 3.5rem;
+            }
+            .module_wrap {
+                margin-bottom: 3.5rem;
+            }
+            .module_title {
+                font-size: 1.65rem;
+            }
+            .module_num {
+                font-size: 1.65rem;
+            }
+            .collage_caption {
+                padding: 1.35rem;
+            }
+            .tech_spec_box {
+                padding: 1.35rem;
+            }
+            .chart_container {
+                margin: 0.75rem 0.5rem !important;
+                padding: 1rem !important;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            :root {
+                --pp1: 1rem;
+            }
+            .case_nav {
+                padding: 0.85rem 0;
+            }
+            .brand_title {
+                font-size: 1.25rem;
+            }
+            .brand_sub {
+                font-size: 0.58rem;
+                letter-spacing: 0.14em;
+            }
+            .nav_actions {
+                gap: 0.4rem;
+            }
+            .nav_back_btn {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.72rem;
+            }
+            .nav_back_btn span {
+                display: none;
+            }
+            .nav_back_btn::after {
+                content: 'Back';
+            }
+            .resume_download_btn {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.72rem;
+            }
+            .case_main {
+                padding-top: 5.5rem;
+                padding-bottom: 2.5rem;
+            }
+            .case_hero {
+                margin-bottom: 2.5rem;
+            }
+            .case_title_main {
+                font-size: 1.95rem;
+                line-height: 1.1;
+                margin-bottom: 0.75rem;
+            }
+            .case_title_sub {
+                font-size: 0.98rem;
+                line-height: 1.5;
+                margin-bottom: 1.5rem;
+            }
+            .case_meta_grid {
+                gap: 0.75rem;
+                margin: 1.75rem 0 2rem 0;
+            }
+            .meta_card {
+                padding: 1rem 1.15rem;
+            }
+            .section_nav_bar {
+                gap: 0.4rem;
+                padding: 0.5rem;
+                margin-bottom: 2.5rem;
+            }
+            .section_pill {
+                padding: 0.45rem 0.85rem;
+                font-size: 0.75rem;
+            }
+            .module_header {
+                gap: 0.65rem;
+                margin-bottom: 1rem;
+                padding-bottom: 0.75rem;
+            }
+            .module_num {
+                font-size: 1.4rem;
+            }
+            .module_title {
+                font-size: 1.35rem;
+                line-height: 1.2;
+            }
+            .module_intro {
+                font-size: 0.92rem;
+                line-height: 1.55;
+                margin-bottom: 1.5rem;
+            }
+            .collage_caption {
+                padding: 1.15rem;
+            }
+            .caption_title {
+                font-size: 1.2rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.35rem;
+            }
+            .caption_text {
+                font-size: 0.88rem;
+                line-height: 1.55;
+            }
+            .tech_spec_box {
+                padding: 1.15rem;
+                border-radius: 14px;
+            }
+            .spec_header {
+                font-size: 1.25rem;
+            }
+            .spec_item {
+                font-size: 0.88rem;
+                padding-left: 1.2rem;
+                line-height: 1.55;
+            }
+            .formula_box {
+                padding: 1rem;
+                font-size: 0.82rem;
+            }
+            .metric_chip {
+                padding: 0.9rem 0.75rem;
+            }
+            .metric_chip_val {
+                font-size: 1.6rem;
+            }
+            .case_footer {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.25rem;
+                margin-top: 3.5rem;
+                padding-top: 2rem;
+            }
+            .case_footer_links {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- BACKGROUND PATTERNS -->
+    <div class="topographic-pattern"></div>
+    <div class="fader-gradient"></div>
+
+    <!-- STICKY CASE NAVIGATION BAR -->
+    <header class="case_nav">
+        <div class="case_nav_container">
+            <a href="index.html#top" class="nav_logo_link" aria-label="Home">
+                <span class="brand_title">SHUBAN</span>
+                <span class="brand_dot"></span>
+                <span class="brand_sub">AEROSPACE</span>
+            </a>
+
+            <div class="nav_actions">
+                <a href="index.html#experience" class="nav_back_btn" title="Back to Portfolio Experience">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back to Portfolio</span>
+                </a>
+
+                <a href="Shuban_Singh_Singraur_Resume.pdf" download="Shuban_Singh_Singraur_Resume.pdf" class="resume_download_btn" title="Download Shuban's Resume">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Resume</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CASE STUDY WRAPPER -->
+    <main class="case_main">
+        <!-- HERO / HEADER -->
+        <section class="case_hero">
+            <div class="case_badge_pill">
+                <span class="case_badge_dot"></span>
+                <span>Gurit Wind Private Limited &bull; R&amp;D Engineering &bull; Jun 2026</span>
+            </div>
+
+            <h1 class="case_title_main">Introduction to Core Infusion</h1>
+            <p class="case_title_sub">
+                Fiber Reinforced Composites: Vacuum Resin Infusion (VARTM), ASTM/ISO Mechanical Testing &amp; SolidWorks FEA
+            </p>
+
+            <div class="case_meta_grid">
+                <div class="meta_card">
+                    <div class="meta_label">Role &amp; Location</div>
+                    <div class="meta_val">R&amp;D Intern &bull; Gurit, Chennai, India</div>
+                </div>
+                <div class="meta_card">
+                    <div class="meta_label">Manufacturing Focus</div>
+                    <div class="meta_val">VARTM Vacuum Resin Infusion &bull; Pre-preg &bull; Sandwich Panels</div>
+                </div>
+                <div class="meta_card">
+                    <div class="meta_label">Testing Regimes</div>
+                    <div class="meta_val">ASTM C297 Tensile &bull; ISO 844 Compression Testing</div>
+                </div>
+                <div class="meta_card">
+                    <div class="meta_label">Simulation &amp; CAD</div>
+                    <div class="meta_val">SolidWorks FEA &bull; 8-Ply Biaxial Glass Laminate Shells</div>
+                </div>
+            </div>
+
+            <!-- QUICK JUMP PILLS -->
+            <nav class="section_nav_bar" aria-label="Section shortcuts">
+                <a href="#vartm" class="section_pill">
+                    <span>01.</span> Vacuum Resin Infusion (VARTM)
+                </a>
+                <a href="#compression" class="section_pill">
+                    <span>02.</span> Compression Testing (ISO 844)
+                </a>
+                <a href="#tensile" class="section_pill">
+                    <span>03.</span> Tensile Testing (ASTM C297)
+                </a>
+                <a href="#simulation" class="section_pill">
+                    <span>04.</span> Laminate FEA Simulation
+                </a>
+                <a href="#presentation" class="section_pill" style="border-color: rgba(0, 128, 255, 0.5); color: #70b5ff;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Full Technical Slides (PDF)
+                </a>
+            </nav>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 1: VACUUM RESIN INFUSION PROCESS (VARTM) -->
+        <!-- ========================================================================= -->
+        <section id="vartm" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">01 //</span>
+                <h2 class="module_title">Vacuum Resin Infusion Process (VARTM)</h2>
+            </div>
+            <p class="module_intro">
+                Vacuum Assisted Resin Transfer Molding (VARTM) is the industrial aerospace and wind turbine standard for producing large-scale, structural composite laminates with void-free matrix consolidation and strict fiber-to-resin volume fraction control.
+            </p>
+
+            <div class="collage_grid_2col">
+                <!-- PHOTO / COLLAGE CARD -->
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/gurit/vartm-infusion-diagram.png', 'VARTM Vacuum Assisted Resin Transfer Molding Process Schematic')">
+                        <img src="sources/gurit/vartm-infusion-diagram.png" alt="VARTM Vacuum Resin Infusion Cross Section Diagram" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>VARTM Cross-Section Schematic</span>
+                            <span class="caption_badge">Core Diagram</span>
+                        </div>
+                        <p class="caption_text">
+                            A complete cross-sectional breakdown of the dry stack setup: tool surface, lower/upper distribution mesh, highly permeable release film, peel ply, biaxial glass fiber plies, sealed vacuum bag, and vacuum catch pot.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- DETAILED ENGINEERING SPECIFICATIONS -->
+                <div class="tech_spec_box">
+                    <h3 class="spec_header">Procedural Sequence &amp; Parameters</h3>
+                    
+                    <ul class="spec_list">
+                        <li class="spec_item">
+                            <strong>Surface Prep &amp; Release:</strong> Mold wiped meticulously with acetone to strip contaminants, followed by uniform application of NC55 release agent for clean demolding without surface tearing.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Symmetrical Dry Layup:</strong> Stacking sequence composed of bottom distribution mesh, permeable release film, peel ply, 4 physical layers of bi-directional glass fiber (~800 GSM), top peel ply, release film, and top distribution mesh.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Vacuum Bagging &amp; Integrity Drop Test:</strong> Sealed hermetically with specialized sealant tape and high-elongation vacuum film. A pressure drop test was conducted to ensure a 100% leak-free boundary prior to resin introduction.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Resin System Formulation:</strong> Prime 37 Epoxy paired with Ampreg 3X Hardener, precisely mixed at the calibrated 100:29 weight ratio (total calculated mix: 258g including 72g consumable hose buffer).
+                        </li>
+                        <li class="spec_item">
+                            <strong>Vacuum Degassing &amp; Infusion:</strong> Mixed resin degassed inside a vacuum chamber for 5 minutes to purge entrapped micro-air bubbles, then drawn continuously through the dry laminate via atmospheric pressure.
+                        </li>
+                    </ul>
+
+                    <div class="formula_box">
+                        <div class="formula_title">Empirical Resin Uptake Calculation:</div>
+                        Resin Uptake = [ Mass(after) / Area(after) ] &minus; [ Mass(before) / Area(before) ] (kg/m&sup2;)
+                        <div style="margin-top: 0.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.65);">
+                            Ensures optimal fiber-to-resin ratio (50% fiber volume target) and prevents overweight resin-rich zones.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 2: COMPRESSIVE TESTING (BALSA 150 VS. PET PLANK 100) -->
+        <!-- ========================================================================= -->
+        <section id="compression" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">02 //</span>
+                <h2 class="module_title">Compression Testing: Balsa Wood vs. PET Foam (ISO 844)</h2>
+            </div>
+            <p class="module_intro">
+                Destructive compressive mechanical testing was carried out according to the ISO 844 international standard to benchmark the structural load carrying capacity of end-grain balsa wood core against recycled engineered thermoplastic PET foam planks.
+            </p>
+
+            <div class="collage_grid_equal">
+                <!-- DATA & CHART CARD -->
+                <div class="collage_card">
+                    <div style="padding: 1.75rem 1.75rem 0.5rem 1.75rem;">
+                        <div class="caption_title">
+                            <span>Normalized Stress-Strain Profiles</span>
+                            <span class="caption_badge">ISO 844 Standard</span>
+                        </div>
+                        <p class="caption_text">
+                            Empirical stress-strain curves comparing epoxy-infused Balsa 150 against PET Plank 100 under uniaxial compressive loading.
+                        </p>
+                    </div>
+
+                    <!-- HIGH TECH SVG CURVE VISUALIZATION -->
+                    <div class="chart_container" style="margin: 1rem 1.75rem;">
+                        <svg viewBox="0 0 500 240" width="100%" height="auto" style="display: block;">
+                            <!-- Grid lines -->
+                            <line x1="50" y1="20" x2="50" y2="200" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                            <line x1="50" y1="200" x2="480" y2="200" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                            <line x1="50" y1="110" x2="480" y2="110" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4" />
+                            
+                            <!-- Axis labels -->
+                            <text x="15" y="110" fill="#70b5ff" font-family="sans-serif" font-size="11" transform="rotate(-90 15 110)">Stress (&sigma;)</text>
+                            <text x="240" y="225" fill="#70b5ff" font-family="sans-serif" font-size="11">Strain (&epsilon;)</text>
+
+                            <!-- Balsa Wood Curve (Black/White with cyan accent, steep rise to 14.88 MPa) -->
+                            <path d="M 50 200 L 150 145 C 220 90, 340 40, 440 35 L 470 55" fill="none" stroke="#ffffff" stroke-width="3" />
+                            
+                            <!-- PET Foam Curve (Sharp yield peak at 1.21 MPa then plateau, blue) -->
+                            <path d="M 50 200 L 90 100 C 100 85, 115 105, 130 112 C 180 115, 360 65, 470 55" fill="none" stroke="#00e5ff" stroke-width="2.5" />
+
+                            <!-- Annotation dots & text -->
+                            <circle cx="105" cy="88" r="4" fill="#00e5ff" />
+                            <text x="115" y="85" fill="#00e5ff" font-family="sans-serif" font-size="10" font-weight="bold">PET Yield: 1.21 MPa</text>
+
+                            <circle cx="440" cy="35" r="4" fill="#ffffff" />
+                            <text x="320" y="30" fill="#ffffff" font-family="sans-serif" font-size="10" font-weight="bold">Balsa 150 Yield: 14.88 MPa</text>
+                        </svg>
+
+                        <!-- Legend -->
+                        <div style="display: flex; gap: 2rem; justify-content: center; margin-top: 1rem; font-size: 0.82rem; font-family: var(--ff1);">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: #ffffff;">
+                                <span style="display: inline-block; width: 16px; height: 3px; background: #ffffff;"></span>
+                                <span>Balsa 150 (Epoxy Infused)</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: #00e5ff;">
+                                <span style="display: inline-block; width: 16px; height: 3px; background: #00e5ff;"></span>
+                                <span>PET Plank 100 (Recycled Foam)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collage_caption">
+                        <p class="caption_text">
+                            <strong>Mechanism Insight:</strong> The balsa wood exhibits continuous cellular shear stiffening, whereas PET foam experiences elastic cell-wall bending followed by cell collapse plateau before densification.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- KEY METRICS & STRUCTURAL APPLICATION -->
+                <div class="tech_spec_box">
+                    <h3 class="spec_header">Compressive Test Findings</h3>
+
+                    <div class="metric_row">
+                        <div class="metric_chip">
+                            <div class="metric_chip_val">14.88</div>
+                            <div class="metric_chip_label">Balsa Yield (MPa)</div>
+                        </div>
+                        <div class="metric_chip">
+                            <div class="metric_chip_val">1.21</div>
+                            <div class="metric_chip_label">PET Yield (MPa)</div>
+                        </div>
+                        <div class="metric_chip">
+                            <div class="metric_chip_val">~12&times;</div>
+                            <div class="metric_chip_label">Load Capacity Gain</div>
+                        </div>
+                    </div>
+
+                    <ul class="spec_list">
+                        <li class="spec_item">
+                            <strong>12&times; Strength Differential:</strong> Infused Balsa 150 demonstrated a dramatic 12-fold superiority in compressive yield stress over the standard PET Plank 100 foam.
+                        </li>
+                        <li class="spec_item">
+                            <strong>High Shear Stiffness:</strong> The natural axial cellular orientation of end-grain balsa provides outstanding shear transmission between composite face skins in sandwich panels, critical for wind turbine blade shear webs.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Application Trade-off:</strong> While PET foam delivers significant weight reduction, thermoformability, and recyclability (Kerdyn Green), balsa wood remains indispensable for localized regions experiencing concentrated compressive and shear stresses.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 3: TENSILE PERFORMANCE TESTING (ASTM C297) -->
+        <!-- ========================================================================= -->
+        <section id="tensile" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">03 //</span>
+                <h2 class="module_title">Tensile Performance: Balsa Wood (ASTM C297)</h2>
+            </div>
+            <p class="module_intro">
+                Flatwise tensile testing performed on a Zwick/Roell universal material testing machine to measure the ultimate tensile strength and Young's modulus of balsa wood core specimens under perpendicular tension.
+            </p>
+
+            <div class="collage_grid_2col">
+                <!-- TESTING MACHINE IMAGE CARD -->
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/gurit/tensile-testing-machine.jpg', 'Zwick/Roell Universal Material Testing System - ASTM C297 Tensile Test')">
+                        <img src="sources/gurit/tensile-testing-machine.jpg" alt="Zwick Roell Tensile Testing Machine" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Zwick/Roell Universal Test Rig</span>
+                            <span class="caption_badge">ASTM C297 Rig</span>
+                        </div>
+                        <p class="caption_text">
+                            Dual-column high-precision hydraulic tensile testing frame with digital extensometer and real-time load cell acquisition used to evaluate coupon failure thresholds.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TEST RESULTS & METRICS -->
+                <div class="tech_spec_box">
+                    <h3 class="spec_header">ASTM C297 Tensile Metrics</h3>
+
+                    <div class="metric_row" style="grid-template-columns: 1fr 1fr;">
+                        <div class="metric_chip">
+                            <div class="metric_chip_val">16.5</div>
+                            <div class="metric_chip_label">Max Stress (MPa)</div>
+                        </div>
+                        <div class="metric_chip">
+                            <div class="metric_chip_val">2046.3</div>
+                            <div class="metric_chip_label">Young's Modulus (MPa)</div>
+                        </div>
+                    </div>
+
+                    <ul class="spec_list">
+                        <li class="spec_item">
+                            <strong>Ultimate Tensile Stress:</strong> Specimens withstood maximum tensile stress of <strong>16.5 MPa</strong> prior to catastrophic cell wall rupture.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Elastic Modulus (Stiffness):</strong> Recorded an exceptionally high elastic tensile modulus of <strong>2,046.27 MPa</strong>, validating its superior resistance to elongation under high operational loads.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Validation Against Aerodynamic Fatigue:</strong> Wind turbine blades must endure 20 to 30 years of continuous cyclical gusts, moisture, and temperature fluctuations. Destructive tensile coupon testing ensures the resin-impregnated core prevents skin-core debonding under extreme aerodynamic lift forces.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 4: SOLIDWORKS FEA SIMULATION OF THE LAMINATE -->
+        <!-- ========================================================================= -->
+        <section id="simulation" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">04 //</span>
+                <h2 class="module_title">Simulation Of the Laminate (SolidWorks FEA)</h2>
+            </div>
+            <p class="module_intro">
+                Finite Element Analysis (FEA) modeling conducted in SolidWorks Simulation to computationally validate the stress distribution and deflection behavior of a custom 8-ply balanced biaxial glass fiber composite laminate shell.
+            </p>
+
+            <div class="collage_grid_equal">
+                <!-- SIMULATION IMAGE 1: GEOMETRY & PLY STACK -->
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/gurit/simulation-geometry-plies.png', 'SolidWorks Composite Ply Stack: 8 Plies at alternating 45 degree angles')">
+                        <img src="sources/gurit/simulation-geometry-plies.png" alt="SolidWorks Laminate Ply Definition" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Composite Laminate Definition</span>
+                            <span class="caption_badge">CAD Setup</span>
+                        </div>
+                        <p class="caption_text">
+                            <strong>Geometry &amp; Plies:</strong> 200 mm &times; 200 mm 2D shell surface. Converted 4 physical biaxial sheets into 8 discrete mathematical plies (0.1875 mm thickness each) with alternating &plusmn;45&deg; fiber angles and 50% fiber volume fraction.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- SIMULATION IMAGE 2: BOUNDARY CONDITIONS & RESULTS -->
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/gurit/simulation-boundary-stress.png', 'FEA Boundary Conditions & Von Mises Stress Analysis')">
+                        <img src="sources/gurit/simulation-boundary-stress.png" alt="SolidWorks FEA Boundary Conditions and Von Mises Stress Plot" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Stress Analysis Results</span>
+                            <span class="caption_badge">FEA Nodal Plot</span>
+                        </div>
+                        <p class="caption_text">
+                            <strong>Cantilever Loading:</strong> Clamped one edge (fixed support) and applied a 100 N downward edge load. Static nodal stress confirmed maximum Von Mises stress of <strong>224.5 MPa</strong> safely localized at the clamped root.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATION SUMMARY METRICS -->
+            <div class="tech_spec_box" style="margin-top: 2rem;">
+                <h3 class="spec_header">Simulation Architecture &amp; Correlation</h3>
+                <div class="metric_row" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="metric_chip">
+                        <div class="metric_chip_val">200&times;200</div>
+                        <div class="metric_chip_label">Coupon Size (mm)</div>
+                    </div>
+                    <div class="metric_chip">
+                        <div class="metric_chip_val">8 Plies</div>
+                        <div class="metric_chip_label">Laminate Stack</div>
+                    </div>
+                    <div class="metric_chip">
+                        <div class="metric_chip_val">&plusmn;45&deg;</div>
+                        <div class="metric_chip_label">Alternating Angles</div>
+                    </div>
+                    <div class="metric_chip">
+                        <div class="metric_chip_val">224.5</div>
+                        <div class="metric_chip_label">Max Stress (MPa)</div>
+                    </div>
+                </div>
+                <p style="font-family: var(--ff1); font-size: 0.95rem; line-height: 1.65; color: rgba(255, 255, 255, 0.85); margin: 0;">
+                    <strong>Design Conclusion:</strong> The 8-ply balanced &plusmn;45&deg; laminate architecture distributes cantilever shear and bending moments with high symmetry, preventing out-of-plane warping and ensuring that maximum stress concentrations are contained well below the ultimate tensile strength of Gurit biaxial glass fiber systems.
+                </p>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- PRESENTATION DOWNLOAD SECTION -->
+        <!-- ========================================================================= -->
+        <section id="presentation" class="module_wrap" style="text-align: center; background: rgba(0, 128, 255, 0.03); border: 1px solid rgba(0, 128, 255, 0.15); border-radius: 24px; padding: 3.5rem 2rem;">
+            <div class="caption_badge" style="margin-bottom: 1rem;">Complete Technical Documentation</div>
+            <h2 style="font-family: var(--ff2); font-size: 2.5rem; text-transform: uppercase; color: #ffffff; margin: 0 0 1rem 0;">Download Full Presentation Deck</h2>
+            <p style="font-family: var(--ff1); font-size: 1.05rem; color: rgba(255, 255, 255, 0.75); max-width: 38rem; margin: 0 auto 2.5rem auto; line-height: 1.7;">
+                Access the complete 25-slide presentation on "Fiber Reinforced Composites" covering PET foam extrusion, sandwich panel mechanics, VARTM sequence, and laboratory test datasets.
+            </p>
+
+            <a href="sources/gurit/Gurit_Fiber_Reinforced_Composites_Presentation.pdf" download="Shuban_Singh_Gurit_Composites_Presentation.pdf" class="resume_download_btn" style="padding: 0.9rem 2.2rem; font-size: 0.95rem;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download Slides (PDF, 2.7 MB)</span>
+            </a>
+        </section>
+
+        <!-- FOOTER & CROSS-NAVIGATION -->
+        <footer class="case_footer">
+            <div style="font-family: var(--ff1); font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
+                &copy; Shuban Singh Singraur &bull; Gurit Wind R&amp;D Case Study
+            </div>
+            <div class="case_footer_links">
+                <a href="index.html#experience" class="case_footer_link">&larr; Back to Portfolio</a>
+                <a href="hcl-experience.html" class="case_footer_link" style="color: #00e5ff;">Next: HCLTech Data Analytics &rarr;</a>
+                <a href="#top" class="case_footer_link">&uarr; Back to Top</a>
+            </div>
+        </footer>
+    </main>
+
+    <!-- INTERACTIVE LIGHTBOX MODAL -->
+    <div id="lightboxModal" class="lightbox_modal" onclick="closeLightbox(event)">
+        <div class="lightbox_content" onclick="event.stopPropagation()">
+            <button class="lightbox_close_btn" onclick="closeLightbox()" title="Close">&times;</button>
+            <img id="lightboxImg" class="lightbox_img" src="" alt="Enlarged view" />
+            <div id="lightboxCaption" class="lightbox_caption_bar"></div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT FOR LIGHTBOX MODAL & SMOOTH SCROLL -->
+    <script>
+        function openLightbox(src, caption) {
+            var modal = document.getElementById('lightboxModal');
+            var img = document.getElementById('lightboxImg');
+            var cap = document.getElementById('lightboxCaption');
+            img.src = src;
+            cap.innerText = caption;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            var modal = document.getElementById('lightboxModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>

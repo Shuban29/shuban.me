@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aerospace Hello Morph Test (2500ms)</title>
+<style>
+    :root {
+        --ff1: 'Athletics', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --ff2: 'Tuskergrotesk', Impact, 'Arial Black', sans-serif;
+    }
+    body {
+        margin: 0;
+        background: #050614;
+        color: #fff;
+        font-family: var(--ff1), sans-serif;
+        overflow: hidden;
+    }
+
+    #preloader {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999999;
+        background: radial-gradient(circle at 50% 50%, #0a112c 0%, #050614 70%, #02030a 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
+    }
+
+    #preloader.preloader--done {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* HUD RADAR BACKGROUND */
+    .hud_grid {
+        position: absolute;
+        inset: 0;
+        background-image: 
+            radial-gradient(circle at center, rgba(0, 128, 255, 0.12) 1px, transparent 1px),
+            linear-gradient(rgba(0, 128, 255, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 128, 255, 0.04) 1px, transparent 1px);
+        background-size: 32px 32px, 64px 64px, 64px 64px;
+        background-position: center center;
+        opacity: 0.65;
+        pointer-events: none;
+    }
+
+    .radar_ring {
+        position: absolute;
+        width: clamp(300px, 48vw, 600px);
+        height: clamp(300px, 48vw, 600px);
+        border: 1px dashed rgba(0, 229, 255, 0.2);
+        border-radius: 50%;
+        animation: radarSpin 16s linear infinite;
+        pointer-events: none;
+    }
+    .radar_ring::before {
+        content: '';
+        position: absolute;
+        inset: -28px;
+        border: 1px solid rgba(0, 128, 255, 0.08);
+        border-radius: 50%;
+    }
+    @keyframes radarSpin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* STAGE & SVG CONTAINER */
+    .morph_stage {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .morph_svg {
+        width: 100%;
+        height: 100%;
+        max-width: 1200px;
+        max-height: 720px;
+        overflow: visible;
+    }
+
+    /* VOLUMETRIC CLOUDS */
+    .clouds_layer {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 14;
+        overflow: hidden;
+    }
+
+    .cloud {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(16, 30, 75, 0.92) 0%, rgba(10, 18, 50, 0.7) 60%, transparent 75%);
+        filter: blur(35px);
+        will-change: transform, opacity;
+        opacity: 0;
+    }
+
+    .cloud_tr {
+        width: clamp(350px, 48vw, 750px);
+        height: clamp(260px, 36vw, 550px);
+        top: -12%;
+        right: -10%;
+    }
+
+    .cloud_center {
+        width: clamp(300px, 42vw, 600px);
+        height: clamp(240px, 32vw, 450px);
+        top: 20%;
+        left: 55%;
+        background: radial-gradient(circle, rgba(28, 50, 115, 0.88) 0%, rgba(12, 22, 60, 0.6) 65%, transparent 78%);
+        filter: blur(40px);
+    }
+
+    .cloud_bl {
+        width: clamp(380px, 52vw, 800px);
+        height: clamp(280px, 38vw, 600px);
+        bottom: -15%;
+        left: -15%;
+    }
+
+    /* TELEMETRY TAG */
+    .telemetry_sub {
+        position: absolute;
+        bottom: 8%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'SF Mono', Consolas, Monaco, monospace;
+        font-size: clamp(0.7rem, 1.4vw, 0.85rem);
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(0, 229, 255, 0.75);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        z-index: 12;
+        transition: opacity 0.4s ease;
+    }
+
+    .telemetry_dot {
+        width: 6px;
+        height: 6px;
+        background: #00ff88;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #00ff88;
+    }
+
+    .skip_hint {
+        position: absolute;
+        bottom: 24px;
+        font-family: 'SF Mono', Consolas, Monaco, monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+        pointer-events: none;
+        z-index: 12;
+    }
+
+    /* DEMO PAGE CONTENT */
+    .demo_content {
+        padding: 5rem 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .demo_content h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #fff;
+    }
+</style>
+</head>
+<body>
+
+    <div id="preloader" role="status" aria-label="Loading Shuban Portfolio">
+        <div class="hud_grid"></div>
+        <div class="radar_ring"></div>
+
+        <!-- AMBIENT CLOUDS -->
+        <div class="clouds_layer">
+            <div class="cloud cloud_tr" id="cloudTR"></div>
+            <div class="cloud cloud_center" id="cloudCenter"></div>
+            <div class="cloud cloud_bl" id="cloudBL"></div>
+        </div>
+
+        <div class="morph_stage">
+            <svg id="morphSvg" class="morph_svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                    <linearGradient id="morphGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ffffff"/>
+                        <stop offset="45%" stop-color="#00e5ff"/>
+                        <stop offset="100%" stop-color="#0080ff"/>
+                    </linearGradient>
+                    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur stdDeviation="5" result="glow"/>
+                        <feMerge>
+                            <feMergeNode in="glow"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                    <linearGradient id="fuselageFill" x1="500" y1="150" x2="500" y2="450" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="rgba(255, 255, 255, 0.95)" />
+                        <stop offset="25%" stop-color="rgba(166, 200, 232, 0.85)" />
+                        <stop offset="65%" stop-color="rgba(20, 40, 80, 0.7)" />
+                        <stop offset="100%" stop-color="rgba(5, 16, 37, 0.9)" />
+                    </linearGradient>
+                </defs>
+
+                <!-- FLIGHT CRAFT GROUP (ROTATES & FLIES AWAY) -->
+                <g id="craftGroup" style="transform-origin: 500px 300px;">
+                    <!-- AFTERBURNER EXHAUST CONES -->
+                    <g id="thrustGroup" opacity="0">
+                        <polygon points="488,446 478,540 484,446" fill="#00e5ff" opacity="0.9" filter="url(#neonGlow)"/>
+                        <polygon points="480,446 480,560 484,446" fill="#ffffff" opacity="0.95"/>
+                        <polygon points="512,446 522,540 516,446" fill="#00e5ff" opacity="0.9" filter="url(#neonGlow)"/>
+                        <polygon points="520,446 520,560 516,446" fill="#ffffff" opacity="0.95"/>
+                        <!-- CONTRAILS -->
+                        <line x1="481" y1="540" x2="481" y2="900" stroke="rgba(0, 229, 255, 0.65)" stroke-width="2.5" stroke-dasharray="8 4"/>
+                        <line x1="519" y1="540" x2="519" y2="900" stroke="rgba(0, 229, 255, 0.65)" stroke-width="2.5" stroke-dasharray="8 4"/>
+                    </g>
+
+                    <!-- FILLED BODY OF JET (FADES IN DURING MORPH) -->
+                    <path id="planeBodyFill" fill="url(#fuselageFill)" opacity="0" />
+
+                    <!-- MORPHING STROKE PATH (HELLO -> AEROPLANE OUTLINE) -->
+                    <path id="morphStroke" fill="none" stroke="url(#morphGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#neonGlow)" />
+
+                    <!-- INTERNAL JET DETAILS (COCKPIT, STRAKES, BEACONS) -->
+                    <g id="planeDetails" opacity="0">
+                        <!-- CANOPY VISOR -->
+                        <polygon points="500,210 510,270 490,270" fill="#00e5ff" opacity="0.9" filter="url(#neonGlow)"/>
+                        <polygon points="500,215 506,260 494,260" fill="#ffffff" opacity="0.85"/>
+                        <!-- WING STRAKES & PANEL LINES -->
+                        <line x1="500" y1="270" x2="500" y2="430" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+                        <line x1="485" y1="320" x2="385" y2="380" stroke="rgba(0, 229, 255, 0.7)" stroke-width="1"/>
+                        <line x1="515" y1="320" x2="615" y2="380" stroke="rgba(0, 229, 255, 0.7)" stroke-width="1"/>
+                        <!-- WINGTIP NAVIGATION BEACONS -->
+                        <circle cx="340" cy="384" r="3.5" fill="#ff3366" filter="url(#neonGlow)"/>
+                        <circle cx="660" cy="384" r="3.5" fill="#00ff88" filter="url(#neonGlow)"/>
+                    </g>
+                </g>
+
+                <!-- SONIC BOOM RING -->
+                <circle id="sonicRing" cx="500" cy="300" r="10" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0"/>
+            </svg>
+        </div>
+
+        <div class="telemetry_sub" id="telemetrySub">
+            <span class="telemetry_dot"></span>
+            <span>AERO SYS // QUB INITIALIZED</span>
+        </div>
+
+        <div class="skip_hint">Click anywhere or press Esc to skip</div>
+    </div>
+
+    <div class="demo_content">
+        <h1>Website Loaded Successfully!</h1>
+        <p>The aerospace morph animation completed smoothly in 2500 ms.</p>
+        <button onclick="location.reload()" style="padding: 12px 24px; background: #0080ff; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; margin-top: 1rem;">Replay Animation</button>
+    </div>
+
+    <script>
+    (function() {
+        const helloD = "M 0 74.325 C 18.167 62.158 43.5 45.44 51.5 23.39 C 58.492 4.119 50.501 -5.108 42.5 2.873 C 31 14.344 32.5 56.886 29 84.825 C 30.167 70.194 35.5 46.045 54.5 46.825 C 71.5 47.523 51.613 80.809 65 84.825 C 91.667 92.825 117 45.325 98.5 45.325 C 84.5 45.325 69.5 80.959 98.5 84.825 C 132.25 89.325 157 8.325 139 8.325 C 124 8.325 109 81.325 136.5 83.325 C 173.618 86.025 194.5 11.325 177 9.325 C 159.5 7.325 147 83.5 173.5 83.5 C 194.155 83.5 192 63.386 212.5 48.386 C 204 51.386 184.012 77.95 209.5 85 C 234.425 88.012 239.5 45.325 219.5 46.825 C 207.025 47.761 221 72.825 257 49.325";
+
+        const planeD = "M 500 150 C 504 185 510 220 518 245 L 530 275 L 660 375 L 660 392 L 538 365 L 538 415 L 565 440 L 565 452 L 518 446 L 500 440 L 482 446 L 435 452 L 435 440 L 462 415 L 462 365 L 340 392 L 340 375 L 470 275 L 482 245 C 490 220 496 185 500 150 Z";
+
+        const N = 280;
+        const NS = "http://www.w3.org/2000/svg";
+        const pHello = document.createElementNS(NS, "path");
+        pHello.setAttribute("d", helloD);
+
+        const pPlane = document.createElementNS(NS, "path");
+        pPlane.setAttribute("d", planeD);
+
+        const lenH = pHello.getTotalLength();
+        const lenP = pPlane.getTotalLength();
+
+        const scaleH = 2.1;
+        const offsetX = 500 - (257 * scaleH) / 2;
+        const offsetY = 300 - (85 * scaleH) / 2;
+
+        const ptsH = [];
+        const ptsP = [];
+
+        for (let i = 0; i < N; i++) {
+            const ptH = pHello.getPointAtLength((i / (N - 1)) * lenH);
+            ptsH.push({
+                x: offsetX + ptH.x * scaleH,
+                y: offsetY + ptH.y * scaleH
+            });
+
+            const ptP = pPlane.getPointAtLength((i / (N - 1)) * lenP);
+            ptsP.push({
+                x: ptP.x,
+                y: ptP.y
+            });
+        }
+
+        function buildPath(pts, count) {
+            if (count <= 1) return "";
+            let d = "M " + pts[0].x.toFixed(1) + " " + pts[0].y.toFixed(1);
+            for (let i = 1; i < count; i++) {
+                d += " L " + pts[i].x.toFixed(1) + " " + pts[i].y.toFixed(1);
+            }
+            return d;
+        }
+
+        const preloader = document.getElementById("preloader");
+        const morphStroke = document.getElementById("morphStroke");
+        const planeBodyFill = document.getElementById("planeBodyFill");
+        const planeDetails = document.getElementById("planeDetails");
+        const thrustGroup = document.getElementById("thrustGroup");
+        const craftGroup = document.getElementById("craftGroup");
+        const sonicRing = document.getElementById("sonicRing");
+        const telemetrySub = document.getElementById("telemetrySub");
+
+        const cloudTR = document.getElementById("cloudTR");
+        const cloudCenter = document.getElementById("cloudCenter");
+        const cloudBL = document.getElementById("cloudBL");
+
+        planeBodyFill.setAttribute("d", planeD);
+
+        let dismissed = false;
+        function dismissPreloader() {
+            if (dismissed) return;
+            dismissed = true;
+            preloader.classList.add("preloader--done");
+            setTimeout(() => {
+                if (preloader.parentNode) preloader.style.display = "none";
+            }, 400);
+        }
+
+        const TOTAL_DURATION = 2500;
+        const startTime = performance.now();
+
+        function frame(now) {
+            if (dismissed) return;
+            const t = now - startTime;
+
+            // 1. [0ms - 750ms]: "hello" writes out stroke by stroke
+            if (t < 750) {
+                const prog = Math.min(1, Math.max(0, t / 750));
+                const count = Math.max(2, Math.floor(N * prog));
+                morphStroke.setAttribute("d", buildPath(ptsH, count));
+            }
+            // 2. [750ms - 950ms]: Pause on "hello", glowing in full
+            else if (t < 950) {
+                morphStroke.setAttribute("d", buildPath(ptsH, N));
+            }
+            // 3. [950ms - 1650ms]: POINT-BY-POINT MORPH INTO AEROPLANE
+            else if (t < 1650) {
+                const morphP = (t - 950) / 700;
+                // Smooth cubic ease-in-out
+                const ease = morphP < 0.5 
+                    ? 4 * morphP * morphP * morphP 
+                    : 1 - Math.pow(-2 * morphP + 2, 3) / 2;
+
+                const curPts = ptsH.map((h, i) => {
+                    const p = ptsP[i];
+                    return {
+                        x: h.x + (p.x - h.x) * ease,
+                        y: h.y + (p.y - h.y) * ease
+                    };
+                });
+                morphStroke.setAttribute("d", buildPath(curPts, N));
+
+                // Fade in airplane fill & inner details past 40% morph
+                if (ease > 0.4) {
+                    const innerAlpha = (ease - 0.4) / 0.6;
+                    planeBodyFill.setAttribute("opacity", (innerAlpha * 0.95).toFixed(2));
+                    planeDetails.setAttribute("opacity", innerAlpha.toFixed(2));
+                }
+            }
+            // 4. [1650ms - 2250ms]: TAKEOFF & FLIGHT INTO CLOUDS
+            else if (t < 2250) {
+                morphStroke.setAttribute("d", buildPath(ptsP, N));
+                planeBodyFill.setAttribute("opacity", "0.95");
+                planeDetails.setAttribute("opacity", "1");
+                thrustGroup.setAttribute("opacity", "1");
+                telemetrySub.style.opacity = "0";
+
+                const flightP = (t - 1650) / 600;
+                // Cubic acceleration
+                const flyEase = flightP * flightP * (3 - 2 * flightP);
+
+                // Aircraft banking & rocket climb
+                const rot = flyEase * 42; // banks up to 42 degrees
+                const tx = flyEase * 650;  // flies top-right
+                const ty = -flyEase * 650;
+                const sc = 1 + flyEase * 0.4;
+                craftGroup.style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) rotate(${rot.toFixed(1)}deg) scale(${sc.toFixed(2)})`;
+
+                // Sonic ring expansion
+                if (flightP < 0.6) {
+                    const ringP = flightP / 0.6;
+                    sonicRing.setAttribute("r", (10 + ringP * 250).toFixed(0));
+                    sonicRing.setAttribute("opacity", (1 - ringP).toFixed(2));
+                } else {
+                    sonicRing.setAttribute("opacity", "0");
+                }
+
+                // Clouds billowing and parting
+                const cloudAlpha = Math.min(1, flightP * 2);
+                cloudTR.style.opacity = (cloudAlpha * 0.85).toFixed(2);
+                cloudTR.style.transform = `translate3d(${(flyEase * 40).toFixed(0)}px, ${(-flyEase * 30).toFixed(0)}px, 0)`;
+
+                cloudCenter.style.opacity = (cloudAlpha * 0.9).toFixed(2);
+                cloudCenter.style.transform = `scale(${(1 + flyEase * 0.6).toFixed(2)}) translate3d(${(flyEase * 80).toFixed(0)}px, ${(-flyEase * 50).toFixed(0)}px, 0)`;
+
+                cloudBL.style.opacity = (cloudAlpha * 0.7).toFixed(2);
+            }
+            // 5. [2250ms - 2500ms]: Curtain dissolves
+            else {
+                dismissPreloader();
+                return;
+            }
+
+            if (t < TOTAL_DURATION) {
+                requestAnimationFrame(frame);
+            } else {
+                dismissPreloader();
+            }
+        }
+
+        requestAnimationFrame(frame);
+
+        // Instant skip
+        preloader.addEventListener("click", dismissPreloader);
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" || e.key === " ") dismissPreloader();
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+@echo off
+echo Opening your portfolio website...
+start "" "%~dp0index.html"
