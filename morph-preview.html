@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aerospace Hello Morph Test (2500ms)</title>
+<title>Aerospace Hello Morph Test - Minimal & Straight Up (2500ms)</title>
 <style>
     :root {
         --ff1: 'Athletics', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -28,7 +28,7 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
+        transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s ease;
     }
 
     #preloader.preloader--done {
@@ -92,7 +92,7 @@
         overflow: visible;
     }
 
-    /* VOLUMETRIC CLOUDS */
+    /* VOLUMETRIC CLOUDS (SYMMETRICAL PARTING) */
     .clouds_layer {
         position: absolute;
         inset: 0;
@@ -108,29 +108,34 @@
         filter: blur(35px);
         will-change: transform, opacity;
         opacity: 0;
+        transition: opacity 0.3s ease;
     }
 
-    .cloud_tr {
-        width: clamp(350px, 48vw, 750px);
-        height: clamp(260px, 36vw, 550px);
-        top: -12%;
-        right: -10%;
+    /* Left Cloud Mass */
+    .cloud_left {
+        width: clamp(340px, 46vw, 700px);
+        height: clamp(260px, 35vw, 550px);
+        top: 10%;
+        left: -12%;
     }
 
+    /* Right Cloud Mass */
+    .cloud_right {
+        width: clamp(340px, 46vw, 700px);
+        height: clamp(260px, 35vw, 550px);
+        top: 10%;
+        right: -12%;
+    }
+
+    /* Center Top Cloud Pierced */
     .cloud_center {
-        width: clamp(300px, 42vw, 600px);
+        width: clamp(320px, 44vw, 620px);
         height: clamp(240px, 32vw, 450px);
-        top: 20%;
-        left: 55%;
+        top: -8%;
+        left: 50%;
+        transform: translateX(-50%);
         background: radial-gradient(circle, rgba(28, 50, 115, 0.88) 0%, rgba(12, 22, 60, 0.6) 65%, transparent 78%);
         filter: blur(40px);
-    }
-
-    .cloud_bl {
-        width: clamp(380px, 52vw, 800px);
-        height: clamp(280px, 38vw, 600px);
-        bottom: -15%;
-        left: -15%;
     }
 
     /* TELEMETRY TAG */
@@ -193,65 +198,61 @@
 
         <!-- AMBIENT CLOUDS -->
         <div class="clouds_layer">
-            <div class="cloud cloud_tr" id="cloudTR"></div>
+            <div class="cloud cloud_left" id="cloudLeft"></div>
             <div class="cloud cloud_center" id="cloudCenter"></div>
-            <div class="cloud cloud_bl" id="cloudBL"></div>
+            <div class="cloud cloud_right" id="cloudRight"></div>
         </div>
 
         <div class="morph_stage">
             <svg id="morphSvg" class="morph_svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
                 <defs>
-                    <linearGradient id="morphGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <linearGradient id="morphGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" stop-color="#ffffff"/>
-                        <stop offset="45%" stop-color="#00e5ff"/>
+                        <stop offset="50%" stop-color="#00e5ff"/>
                         <stop offset="100%" stop-color="#0080ff"/>
                     </linearGradient>
                     <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
-                        <feGaussianBlur stdDeviation="5" result="glow"/>
+                        <feGaussianBlur stdDeviation="4" result="glow"/>
                         <feMerge>
                             <feMergeNode in="glow"/>
                             <feMergeNode in="SourceGraphic"/>
                         </feMerge>
                     </filter>
-                    <linearGradient id="fuselageFill" x1="500" y1="150" x2="500" y2="450" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="rgba(255, 255, 255, 0.95)" />
-                        <stop offset="25%" stop-color="rgba(166, 200, 232, 0.85)" />
-                        <stop offset="65%" stop-color="rgba(20, 40, 80, 0.7)" />
-                        <stop offset="100%" stop-color="rgba(5, 16, 37, 0.9)" />
+                    <linearGradient id="fuselageFill" x1="500" y1="150" x2="500" y2="440" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="rgba(255, 255, 255, 0.9)" />
+                        <stop offset="35%" stop-color="rgba(160, 200, 240, 0.65)" />
+                        <stop offset="70%" stop-color="rgba(10, 25, 60, 0.8)" />
+                        <stop offset="100%" stop-color="rgba(5, 12, 30, 0.95)" />
                     </linearGradient>
                 </defs>
 
-                <!-- FLIGHT CRAFT GROUP (ROTATES & FLIES AWAY) -->
+                <!-- FLIGHT CRAFT GROUP (GOES STRAIGHT UP) -->
                 <g id="craftGroup" style="transform-origin: 500px 300px;">
-                    <!-- AFTERBURNER EXHAUST CONES -->
+                    <!-- MINIMAL AFTERBURNER CONES & CONTRAIL STREAKS -->
                     <g id="thrustGroup" opacity="0">
-                        <polygon points="488,446 478,540 484,446" fill="#00e5ff" opacity="0.9" filter="url(#neonGlow)"/>
-                        <polygon points="480,446 480,560 484,446" fill="#ffffff" opacity="0.95"/>
-                        <polygon points="512,446 522,540 516,446" fill="#00e5ff" opacity="0.9" filter="url(#neonGlow)"/>
-                        <polygon points="520,446 520,560 516,446" fill="#ffffff" opacity="0.95"/>
-                        <!-- CONTRAILS -->
-                        <line x1="481" y1="540" x2="481" y2="900" stroke="rgba(0, 229, 255, 0.65)" stroke-width="2.5" stroke-dasharray="8 4"/>
-                        <line x1="519" y1="540" x2="519" y2="900" stroke="rgba(0, 229, 255, 0.65)" stroke-width="2.5" stroke-dasharray="8 4"/>
+                        <!-- VERTICAL CONTRAIL TRAILS -->
+                        <line x1="490" y1="440" x2="490" y2="850" stroke="rgba(0, 229, 255, 0.7)" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="510" y1="440" x2="510" y2="850" stroke="rgba(0, 229, 255, 0.7)" stroke-width="2" stroke-linecap="round"/>
+                        <!-- GLOWING EXHAUST FLAME CONES -->
+                        <polygon points="488,436 492,436 490,490" fill="#00e5ff" opacity="0.9" filter="url(#neonGlow)"/>
+                        <polygon points="489,436 491,436 490,465" fill="#ffffff" opacity="0.95"/>
+                        <polygon points="508,436 512,436 510,490" fill="#00e5ff" opacity="0.9" filter="url(#neonGlow)"/>
+                        <polygon points="509,436 511,436 510,465" fill="#ffffff" opacity="0.95"/>
+                        <!-- BEACON EMITTERS -->
+                        <circle cx="490" cy="436" r="3" fill="#ffffff" filter="url(#neonGlow)"/>
+                        <circle cx="510" cy="436" r="3" fill="#ffffff" filter="url(#neonGlow)"/>
                     </g>
 
-                    <!-- FILLED BODY OF JET (FADES IN DURING MORPH) -->
+                    <!-- FILLED MINIMAL BODY OF JET -->
                     <path id="planeBodyFill" fill="url(#fuselageFill)" opacity="0" />
 
-                    <!-- MORPHING STROKE PATH (HELLO -> AEROPLANE OUTLINE) -->
-                    <path id="morphStroke" fill="none" stroke="url(#morphGrad)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#neonGlow)" />
+                    <!-- MORPHING STROKE PATH (HELLO -> MINIMAL AEROPLANE OUTLINE) -->
+                    <path id="morphStroke" fill="none" stroke="url(#morphGrad)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#neonGlow)" />
 
-                    <!-- INTERNAL JET DETAILS (COCKPIT, STRAKES, BEACONS) -->
+                    <!-- MINIMAL CENTERLINE / CANOPY SPINE -->
                     <g id="planeDetails" opacity="0">
-                        <!-- CANOPY VISOR -->
-                        <polygon points="500,210 510,270 490,270" fill="#00e5ff" opacity="0.9" filter="url(#neonGlow)"/>
-                        <polygon points="500,215 506,260 494,260" fill="#ffffff" opacity="0.85"/>
-                        <!-- WING STRAKES & PANEL LINES -->
-                        <line x1="500" y1="270" x2="500" y2="430" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
-                        <line x1="485" y1="320" x2="385" y2="380" stroke="rgba(0, 229, 255, 0.7)" stroke-width="1"/>
-                        <line x1="515" y1="320" x2="615" y2="380" stroke="rgba(0, 229, 255, 0.7)" stroke-width="1"/>
-                        <!-- WINGTIP NAVIGATION BEACONS -->
-                        <circle cx="340" cy="384" r="3.5" fill="#ff3366" filter="url(#neonGlow)"/>
-                        <circle cx="660" cy="384" r="3.5" fill="#00ff88" filter="url(#neonGlow)"/>
+                        <line x1="500" y1="210" x2="500" y2="340" stroke="#00e5ff" stroke-width="1.8" stroke-linecap="round" opacity="0.9" filter="url(#neonGlow)"/>
+                        <circle cx="500" cy="210" r="2" fill="#ffffff"/>
                     </g>
                 </g>
 
@@ -270,7 +271,7 @@
 
     <div class="demo_content">
         <h1>Website Loaded Successfully!</h1>
-        <p>The aerospace morph animation completed smoothly in 2500 ms.</p>
+        <p>Minimal airplane ascending straight up smoothly in 2500 ms.</p>
         <button onclick="location.reload()" style="padding: 12px 24px; background: #0080ff; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; margin-top: 1rem;">Replay Animation</button>
     </div>
 
@@ -278,7 +279,8 @@
     (function() {
         const helloD = "M 0 74.325 C 18.167 62.158 43.5 45.44 51.5 23.39 C 58.492 4.119 50.501 -5.108 42.5 2.873 C 31 14.344 32.5 56.886 29 84.825 C 30.167 70.194 35.5 46.045 54.5 46.825 C 71.5 47.523 51.613 80.809 65 84.825 C 91.667 92.825 117 45.325 98.5 45.325 C 84.5 45.325 69.5 80.959 98.5 84.825 C 132.25 89.325 157 8.325 139 8.325 C 124 8.325 109 81.325 136.5 83.325 C 173.618 86.025 194.5 11.325 177 9.325 C 159.5 7.325 147 83.5 173.5 83.5 C 194.155 83.5 192 63.386 212.5 48.386 C 204 51.386 184.012 77.95 209.5 85 C 234.425 88.012 239.5 45.325 219.5 46.825 C 207.025 47.761 221 72.825 257 49.325";
 
-        const planeD = "M 500 150 C 504 185 510 220 518 245 L 530 275 L 660 375 L 660 392 L 538 365 L 538 415 L 565 440 L 565 452 L 518 446 L 500 440 L 482 446 L 435 452 L 435 440 L 462 415 L 462 365 L 340 392 L 340 375 L 470 275 L 482 245 C 490 220 496 185 500 150 Z";
+        // Minimalist aerodynamic supersonic jet outline
+        const planeD = "M 500 150 L 507 260 L 630 380 L 630 395 L 522 375 L 522 430 L 512 436 L 500 428 L 488 436 L 478 430 L 478 375 L 370 395 L 370 380 L 493 260 Z";
 
         const N = 280;
         const NS = "http://www.w3.org/2000/svg";
@@ -330,9 +332,9 @@
         const sonicRing = document.getElementById("sonicRing");
         const telemetrySub = document.getElementById("telemetrySub");
 
-        const cloudTR = document.getElementById("cloudTR");
+        const cloudLeft = document.getElementById("cloudLeft");
         const cloudCenter = document.getElementById("cloudCenter");
-        const cloudBL = document.getElementById("cloudBL");
+        const cloudRight = document.getElementById("cloudRight");
 
         planeBodyFill.setAttribute("d", planeD);
 
@@ -341,9 +343,10 @@
             if (dismissed) return;
             dismissed = true;
             preloader.classList.add("preloader--done");
+            document.body.classList.remove("preloader-active");
             setTimeout(() => {
                 if (preloader.parentNode) preloader.style.display = "none";
-            }, 400);
+            }, 450);
         }
 
         const TOTAL_DURATION = 2500;
@@ -363,7 +366,7 @@
             else if (t < 950) {
                 morphStroke.setAttribute("d", buildPath(ptsH, N));
             }
-            // 3. [950ms - 1650ms]: POINT-BY-POINT MORPH INTO AEROPLANE
+            // 3. [950ms - 1650ms]: POINT-BY-POINT MORPH INTO MINIMAL AEROPLANE
             else if (t < 1650) {
                 const morphP = (t - 950) / 700;
                 // Smooth cubic ease-in-out
@@ -380,50 +383,54 @@
                 });
                 morphStroke.setAttribute("d", buildPath(curPts, N));
 
-                // Fade in airplane fill & inner details past 40% morph
+                // Fade in minimal fill & spine
                 if (ease > 0.4) {
                     const innerAlpha = (ease - 0.4) / 0.6;
                     planeBodyFill.setAttribute("opacity", (innerAlpha * 0.95).toFixed(2));
                     planeDetails.setAttribute("opacity", innerAlpha.toFixed(2));
                 }
             }
-            // 4. [1650ms - 2250ms]: TAKEOFF & FLIGHT INTO CLOUDS
+            // 4. [1650ms - 2250ms]: STRAIGHT-UP VERTICAL ASCENT INTO CLOUDS
             else if (t < 2250) {
                 morphStroke.setAttribute("d", buildPath(ptsP, N));
                 planeBodyFill.setAttribute("opacity", "0.95");
                 planeDetails.setAttribute("opacity", "1");
                 thrustGroup.setAttribute("opacity", "1");
-                telemetrySub.style.opacity = "0";
+                if (telemetrySub) telemetrySub.style.opacity = "0";
 
                 const flightP = (t - 1650) / 600;
-                // Cubic acceleration
+                // Clean ease-in acceleration straight up
                 const flyEase = flightP * flightP * (3 - 2 * flightP);
 
-                // Aircraft banking & rocket climb
-                const rot = flyEase * 42; // banks up to 42 degrees
-                const tx = flyEase * 650;  // flies top-right
-                const ty = -flyEase * 650;
-                const sc = 1 + flyEase * 0.4;
-                craftGroup.style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) rotate(${rot.toFixed(1)}deg) scale(${sc.toFixed(2)})`;
+                // GO STRAIGHT UP: tx = 0, ty accelerates straight upwards!
+                const ty = -flyEase * 850;
+                const sc = 1 + flyEase * 0.15;
+                craftGroup.style.transform = `translate(0px, ${ty.toFixed(1)}px) scale(${sc.toFixed(2)})`;
 
-                // Sonic ring expansion
-                if (flightP < 0.6) {
-                    const ringP = flightP / 0.6;
-                    sonicRing.setAttribute("r", (10 + ringP * 250).toFixed(0));
+                // Sonic ring expands symmetrically in center
+                if (flightP < 0.65) {
+                    const ringP = flightP / 0.65;
+                    sonicRing.setAttribute("r", (10 + ringP * 280).toFixed(0));
+                    sonicRing.setAttribute("cy", (300 + ty * 0.35).toFixed(0));
                     sonicRing.setAttribute("opacity", (1 - ringP).toFixed(2));
                 } else {
                     sonicRing.setAttribute("opacity", "0");
                 }
 
-                // Clouds billowing and parting
+                // Symmetrical cloud parting to left and right
                 const cloudAlpha = Math.min(1, flightP * 2);
-                cloudTR.style.opacity = (cloudAlpha * 0.85).toFixed(2);
-                cloudTR.style.transform = `translate3d(${(flyEase * 40).toFixed(0)}px, ${(-flyEase * 30).toFixed(0)}px, 0)`;
-
-                cloudCenter.style.opacity = (cloudAlpha * 0.9).toFixed(2);
-                cloudCenter.style.transform = `scale(${(1 + flyEase * 0.6).toFixed(2)}) translate3d(${(flyEase * 80).toFixed(0)}px, ${(-flyEase * 50).toFixed(0)}px, 0)`;
-
-                cloudBL.style.opacity = (cloudAlpha * 0.7).toFixed(2);
+                if (cloudLeft) {
+                    cloudLeft.style.opacity = (cloudAlpha * 0.85).toFixed(2);
+                    cloudLeft.style.transform = `translate3d(${(-flyEase * 100).toFixed(0)}px, ${(flyEase * 40).toFixed(0)}px, 0)`;
+                }
+                if (cloudRight) {
+                    cloudRight.style.opacity = (cloudAlpha * 0.85).toFixed(2);
+                    cloudRight.style.transform = `translate3d(${(flyEase * 100).toFixed(0)}px, ${(flyEase * 40).toFixed(0)}px, 0)`;
+                }
+                if (cloudCenter) {
+                    cloudCenter.style.opacity = (cloudAlpha * 0.9).toFixed(2);
+                    cloudCenter.style.transform = `translateX(-50%) scale(${(1 + flyEase * 0.7).toFixed(2)}) translate3d(0px, ${(-flyEase * 50).toFixed(0)}px, 0)`;
+                }
             }
             // 5. [2250ms - 2500ms]: Curtain dissolves
             else {
