@@ -11,3 +11,4 @@ desktop.ini
 node_modules/
 dist/
 build/
+server.js

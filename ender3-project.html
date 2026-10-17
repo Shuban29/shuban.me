@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Creality Ender 3 Setup & Calibration Guide | Shuban Singh Singraur</title>
+    <meta name="description" content="Creality Ender 3 3D Printer assembly, manual bed levelling, Cura slicing calibration, temperature tower, retraction tuning, dimensional tolerance testing, and team leadership guide." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="sources/style.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://uploads-ssl.webflow.com/64c29599af562adb656080df/css/sister-mary-89119b4fbd322e7c0ecc71d510c.webflow.fde385c36.min.css" rel="stylesheet" type="text/css" />
+
+    <link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230080ff'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-weight='900' font-size='20' fill='%23ffffff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
+
+    <style>
+        :root {
+            --ff1: 'Athletics', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --ff2: 'Tuskergrotesk', Impact, 'Arial Black', sans-serif;
+            --accent-blue: #0080ff;
+            --accent-cyan: #00e5ff;
+            --accent-glow: rgba(0, 128, 255, 0.4);
+            --bg-dark: #050614;
+            --card-bg: rgba(255, 255, 255, 0.025);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-hover-border: rgba(0, 128, 255, 0.4);
+            --mw1: 82rem;
+            --pp1: 2rem;
+        }
+
+        html {
+            scroll-behavior: smooth !important;
+        }
+
+        body {
+            background-color: var(--bg-dark) !important;
+            color: #ffffff !important;
+            font-family: var(--ff1), sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .topographic-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('./sources/topography.svg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .fader-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 15%, rgba(0, 128, 255, 0.09) 0%, rgba(5, 6, 20, 0.95) 75%, #050614 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* HEADER */
+        .case_nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.15rem 0;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(5, 6, 20, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .case_nav_container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: var(--mw1);
+            margin: 0 auto;
+            padding: 0 var(--pp1);
+            box-sizing: border-box;
+        }
+
+        .nav_logo_link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.85rem;
+            text-decoration: none;
+            color: #ffffff;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            user-select: none;
+        }
+
+        .nav_logo_link:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        .brand_title {
+            font-family: var(--ff2), Impact, 'Arial Black', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .brand_dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            box-shadow: 0 0 8px var(--accent-blue);
+            flex-shrink: 0;
+        }
+
+        .brand_sub {
+            font-family: var(--ff1), -apple-system, sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #7ba3cc;
+            line-height: 1;
+        }
+
+        .nav_actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav_back_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.25rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 9999px;
+            color: #ffffff;
+            font-family: var(--ff1);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .nav_back_btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(-2px);
+        }
+
+        .resume_download_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.55rem 1.25rem;
+            background: rgba(0, 128, 255, 0.12);
+            border: 1px solid rgba(0, 128, 255, 0.6);
+            border-radius: 9999px;
+            color: #ffffff !important;
+            font-family: var(--ff1);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 15px rgba(0, 128, 255, 0.15);
+        }
+
+        .resume_download_btn:hover {
+            background: var(--accent-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 128, 255, 0.45);
+        }
+
+        /* MAIN CONTENT */
+        .case_main {
+            position: relative;
+            z-index: 1;
+            padding-top: 8rem;
+            padding-bottom: 6rem;
+            max-width: var(--mw1);
+            margin: 0 auto;
+            padding-left: var(--pp1);
+            padding-right: var(--pp1);
+            box-sizing: border-box;
+        }
+
+        /* HERO */
+        .case_hero {
+            margin-bottom: 4rem;
+        }
+
+        .case_badge_pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(0, 128, 255, 0.1);
+            border: 1px solid rgba(0, 128, 255, 0.3);
+            border-radius: 9999px;
+            font-family: var(--ff1);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #70b5ff;
+            margin-bottom: 1.5rem;
+        }
+
+        .case_badge_dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #00e5ff;
+            box-shadow: 0 0 8px #00e5ff;
+        }
+
+        .case_title_main {
+            font-family: var(--ff2), sans-serif;
+            font-size: clamp(2.6rem, 6vw, 5.2rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.02;
+            letter-spacing: -0.01em;
+            margin: 0 0 1rem 0;
+            color: #ffffff;
+        }
+
+        .case_title_sub {
+            font-family: var(--ff1), sans-serif;
+            font-size: clamp(1.15rem, 2.3vw, 1.7rem);
+            font-weight: 500;
+            color: #9eccff;
+            margin: 0 0 2rem 0;
+            line-height: 1.4;
+        }
+
+        .case_meta_grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            margin: 2.5rem 0 3.5rem 0;
+        }
+
+        @media (max-width: 900px) {
+            .case_meta_grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .case_meta_grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .meta_card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            backdrop-filter: blur(8px);
+        }
+
+        .meta_label {
+            font-family: var(--ff1);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #70b5ff;
+            margin-bottom: 0.4rem;
+        }
+
+        .meta_val {
+            font-family: var(--ff1);
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.35;
+        }
+
+        /* SECTION NAV PILLS */
+        .section_nav_bar {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+        }
+
+        .section_pill {
+            padding: 0.65rem 1.25rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 9999px;
+            color: rgba(255, 255, 255, 0.85);
+            font-family: var(--ff1);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section_pill:hover {
+            background: rgba(0, 128, 255, 0.15);
+            border-color: var(--accent-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* MODULES */
+        .module_wrap {
+            margin-bottom: 5.5rem;
+            padding-top: 1rem;
+        }
+
+        .module_header {
+            display: flex;
+            align-items: baseline;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1.25rem;
+        }
+
+        .module_num {
+            font-family: var(--ff2);
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--accent-blue);
+            line-height: 1;
+        }
+
+        .module_title {
+            font-family: var(--ff2);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .module_intro {
+            font-family: var(--ff1);
+            font-size: 1.12rem;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, 0.82);
+            max-width: 56rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* COLLAGE CARD */
+        .collage_card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .collage_card:hover {
+            border-color: var(--card-hover-border);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 128, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .collage_img_wrap {
+            position: relative;
+            background: #02030a;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .collage_img_wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+            object-fit: cover;
+        }
+
+        .collage_card:hover .collage_img_wrap img {
+            transform: scale(1.025);
+        }
+
+        .zoom_overlay {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(5, 6, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 9999px;
+            padding: 0.4rem 0.85rem;
+            font-family: var(--ff1);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s ease;
+            z-index: 2;
+        }
+
+        .collage_card:hover .zoom_overlay {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .collage_caption {
+            padding: 1.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(5, 6, 20, 0.5);
+        }
+
+        .caption_title {
+            font-family: var(--ff2);
+            font-size: 1.45rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            color: #ffffff;
+            margin: 0 0 0.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .caption_badge {
+            font-family: var(--ff1);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #00e5ff;
+            background: rgba(0, 229, 255, 0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            white-space: nowrap;
+        }
+
+        .caption_text {
+            font-family: var(--ff1);
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+        }
+
+        .collage_grid_2col {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        .collage_grid_equal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .collage_grid_3col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        @media (max-width: 991px) {
+            .collage_grid_2col,
+            .collage_grid_equal,
+            .collage_grid_3col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* TECH SPEC BOX */
+        .tech_spec_box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 2rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .spec_header {
+            font-family: var(--ff2);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.75rem;
+            margin: 0;
+        }
+
+        .spec_list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.15rem;
+        }
+
+        .spec_item {
+            position: relative;
+            padding-left: 1.6rem;
+            font-family: var(--ff1);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .spec_item::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-blue);
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .spec_item strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* METRIC HIGHLIGHT */
+        .metric_row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 900px) {
+            .metric_row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .metric_row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .metric_chip {
+            background: rgba(0, 128, 255, 0.05);
+            border: 1px solid rgba(0, 128, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .metric_chip_val {
+            font-family: var(--ff2);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.1;
+            margin-bottom: 0.35rem;
+        }
+
+        .metric_chip_label {
+            font-family: var(--ff1);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #70b5ff;
+        }
+
+        /* PROCESS TIMELINE / STEPS */
+        .step_cards_grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 991px) {
+            .step_cards_grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .step_card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .step_card:hover {
+            border-color: var(--card-hover-border);
+            transform: translateY(-3px);
+        }
+
+        .step_num {
+            font-family: var(--ff2);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent-blue);
+            line-height: 1;
+        }
+
+        .step_title {
+            font-family: var(--ff2);
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: 0.03em;
+        }
+
+        .step_text {
+            font-family: var(--ff1);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+        }
+
+        /* TROUBLESHOOTING MATRIX TABLE */
+        .troubleshoot_table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--ff1);
+            font-size: 0.88rem;
+            margin-top: 1rem;
+        }
+
+        .troubleshoot_table th {
+            text-align: left;
+            padding: 0.85rem 1rem;
+            background: rgba(0, 128, 255, 0.15);
+            color: #70b5ff;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            border-bottom: 1px solid rgba(0, 128, 255, 0.3);
+        }
+
+        .troubleshoot_table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.85);
+            vertical-align: top;
+            line-height: 1.55;
+        }
+
+        .troubleshoot_table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+            color: #ffffff;
+        }
+
+        .symptom_badge {
+            font-weight: 600;
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .symptom_dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ff5252;
+            box-shadow: 0 0 6px #ff5252;
+            flex-shrink: 0;
+        }
+
+        .fix_badge {
+            color: #00e5ff;
+            font-weight: 500;
+        }
+
+        /* LEADERSHIP CALLOUT */
+        .leadership_box {
+            background: linear-gradient(135deg, rgba(0, 128, 255, 0.08) 0%, rgba(5, 6, 20, 0.6) 100%);
+            border: 1px solid rgba(0, 128, 255, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .leadership_box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-blue));
+        }
+
+        .leadership_title {
+            font-family: var(--ff2);
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #ffffff;
+            margin: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .leadership_p {
+            font-family: var(--ff1);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.88);
+            margin: 0 0 1.25rem 0;
+        }
+
+        .leadership_quote {
+            font-style: italic;
+            color: #9eccff;
+            font-size: 0.98rem;
+            border-left: 2px solid var(--accent-blue);
+            padding-left: 1rem;
+            margin: 1rem 0 0 0;
+        }
+
+        /* FOOTER */
+        .case_footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .case_footer_links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .case_footer_link {
+            color: #70b5ff;
+            text-decoration: none;
+            font-family: var(--ff1);
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .case_footer_link:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        /* LIGHTBOX */
+        .lightbox_modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 4, 12, 0.94);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox_modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox_content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            overflow: hidden;
+            background: #000000;
+        }
+
+        .lightbox_img {
+            max-width: 90vw;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        .lightbox_caption_bar {
+            width: 100%;
+            background: rgba(10, 12, 28, 0.95);
+            padding: 0.85rem 1.25rem;
+            font-family: var(--ff1);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ffffff;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            box-sizing: border-box;
+        }
+
+        .lightbox_close_btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            color: #ffffff;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s ease;
+        }
+
+        .lightbox_close_btn:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="topographic-pattern"></div>
+    <div class="fader-gradient"></div>
+
+    <!-- NAVIGATION -->
+    <header class="case_nav">
+        <div class="case_nav_container">
+            <a href="index.html#projects" class="nav_logo_link">
+                <span class="brand_title">SHUBAN</span>
+                <span class="brand_dot"></span>
+                <span class="brand_sub">MECHANICAL ENGINEER</span>
+            </a>
+            <div class="nav_actions">
+                <a href="index.html#projects" class="nav_back_btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back to Portfolio</span>
+                </a>
+                <a href="sources/3dprinting/Creality_Ender_3_Beginners_Guide.pptx" download="Creality_Ender_3_Beginners_Guide.pptx" class="resume_download_btn" title="Download 21-Slide Beginner's 3D Printing Guide PPTX">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Download Guide (.PPTX)</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="case_main">
+        <!-- ========================================================================= -->
+        <!-- HERO SECTION -->
+        <!-- ========================================================================= -->
+        <section class="case_hero">
+            <div class="case_badge_pill">
+                <span class="case_badge_dot"></span>
+                <span>RAPID PROTOTYPING &bull; ADDITIVE MANUFACTURING &bull; LEADERSHIP</span>
+            </div>
+            <h1 class="case_title_main">3D Printing with the Creality Ender 3</h1>
+            <p class="case_title_sub">Group project &bull; Beginner's guide to 3D printing &bull; Queen's University Belfast</p>
+
+            <div class="case_meta_grid">
+                <div class="meta_card">
+                    <div class="meta_label">My Role</div>
+                    <div class="meta_val">Assembly, Setup, Calibration &amp; Team Leadership</div>
+                </div>
+                <div class="meta_card">
+                    <div class="meta_label">Project Team</div>
+                    <div class="meta_val">Anvay, Shuban &amp; Julius</div>
+                </div>
+                <div class="meta_card">
+                    <div class="meta_label">Printer &amp; Tooling</div>
+                    <div class="meta_val">Creality Ender 3 FDM &amp; UltiMaker Cura Slicer</div>
+                </div>
+                <div class="meta_card">
+                    <div class="meta_label">Project Outcome</div>
+                    <div class="meta_val">High Score &bull; Production-Ready Calibration</div>
+                </div>
+            </div>
+
+            <!-- SECTION NAV PILLS -->
+            <div class="section_nav_bar">
+                <a href="#goal" class="section_pill">01 // Project Goal</a>
+                <a href="#assembly" class="section_pill">02 // Assembly &amp; Safety</a>
+                <a href="#calibration" class="section_pill">03 // Bed Levelling &amp; Z-Offset</a>
+                <a href="#testing" class="section_pill">04 // Calibration Prints</a>
+                <a href="#end-to-end" class="section_pill">05 // Mew &amp; Squirtle Prints</a>
+                <a href="#leadership" class="section_pill">06 // Leadership &amp; Troubleshooting</a>
+                <a href="#presentation" class="section_pill">07 // Attached Presentation</a>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 1: PROJECT GOAL & OVERVIEW -->
+        <!-- ========================================================================= -->
+        <section id="goal" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">01 //</span>
+                <h2 class="module_title">Project Goal &amp; Objective</h2>
+            </div>
+            <p class="module_intro">
+                The objective was to create a comprehensive, beginner-friendly guide that takes an operator with zero prior 3D printing experience from an unassembled box of flat-packed mechanical components through to a dimensionally verified, high-quality first print.
+            </p>
+
+            <div class="metric_row">
+                <div class="metric_chip">
+                    <div class="metric_chip_val">200 &deg;C</div>
+                    <div class="metric_chip_label">Optimal PLA Hotend Temp</div>
+                </div>
+                <div class="metric_chip">
+                    <div class="metric_chip_val">60 &deg;C</div>
+                    <div class="metric_chip_label">Heated Bed Expansion Temp</div>
+                </div>
+                <div class="metric_chip">
+                    <div class="metric_chip_val">0.20 mm</div>
+                    <div class="metric_chip_label">Standard Layer Height</div>
+                </div>
+                <div class="metric_chip">
+                    <div class="metric_chip_val">20&times;20&times;20</div>
+                    <div class="metric_chip_label">Calibration Cube (mm)</div>
+                </div>
+            </div>
+
+            <div class="tech_spec_box" style="margin-top: 1.5rem;">
+                <h3 class="spec_header">Key Engineering Responsibilities</h3>
+                <ul class="spec_list">
+                    <li class="spec_item">
+                        <strong>Complete Mechanical Assembly:</strong> Erected vertical aluminum extrusion frame, squared structural uprights, aligned the Z-axis lead screw coupler, tensioned X and Y timing belts, and conducted strict pre-power electrical safety inspections.
+                    </li>
+                    <li class="spec_item">
+                        <strong>Precision 4-Point Bed Levelling &amp; Z-Offset:</strong> Calibrated heated bed trammel using the thermal 0.1 mm paper drag method at 60&deg;C, fine-tuning nozzle standoff distance to achieve ideal first-layer squish without bed scarring or unadhered lines.
+                    </li>
+                    <li class="spec_item">
+                        <strong>Slicer Configuration in UltiMaker Cura:</strong> Defined custom print profiles balancing speed (50 mm/s), outer wall quality (30 mm/s), layer resolution (0.2 mm), and structural gyroid/grid infill density (15–20%).
+                    </li>
+                    <li class="spec_item">
+                        <strong>Empirical Calibration Suite:</strong> Systematically printed and evaluated a multi-tier Temperature Tower (190&deg;C–230&deg;C), a dual-pillar Retraction Stringing test, and a 20&times;20&times;20 mm calibration cube measured with digital vernier calipers.
+                    </li>
+                    <li class="spec_item">
+                        <strong>End-to-End Proof of Setup:</strong> Printed complex organic test models including a sleeping Mew figure and Squirtle miniature, proving overhang stability, support interface removal, and surface finish.
+                    </li>
+                    <li class="spec_item">
+                        <strong>Team Leadership &amp; Delivery:</strong> Proactively followed up with underperforming team members, redistributed hands-on build tasks, and synthesized the final 21-slide presentation guide, securing a top score.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 2: ASSEMBLY, FRAME SQUARING & SAFETY -->
+        <!-- ========================================================================= -->
+        <section id="assembly" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">02 //</span>
+                <h2 class="module_title">Mechanical Assembly &amp; Electrical Safety</h2>
+            </div>
+            <p class="module_intro">
+                A rigid, perfectly squared mechanical chassis is the foundation of additive manufacturing accuracy. Misalignment in the gantry uprights or uneven belt tension induces binding, layer shifts, and dimensional drift that slicer adjustments cannot correct.
+            </p>
+
+            <div class="step_cards_grid">
+                <div class="step_card">
+                    <div class="step_num">01</div>
+                    <div class="step_title">Vertical Frame &amp; Diagonals</div>
+                    <p class="step_text">
+                        Slid vertical aluminum 2040 extrusions into the base carriage. Fastened M5 bolts loosely, measured corner diagonals with calipers to enforce perpendicular 90&deg; squareness, and torqued fasteners incrementally.
+                    </p>
+                </div>
+                <div class="step_card">
+                    <div class="step_num">02</div>
+                    <div class="step_title">Z-Lead Screw &amp; Coupler</div>
+                    <p class="step_text">
+                        Mounted Z stepper motor to the left vertical frame. Fitted the lead screw into the flexible coupling with precise axial alignment. Secured grub screws to prevent backlash while maintaining smooth vertical gantry transit.
+                    </p>
+                </div>
+                <div class="step_card">
+                    <div class="step_num">03</div>
+                    <div class="step_title">Timing Belt Tensioning</div>
+                    <p class="step_text">
+                        Calibrated tension on X (gantry) and Y (heated bed) reinforced fiberglass belts. Adjusted idler pulleys until belts twanged like a taut guitar string, eliminating mechanical backlash without overloading stepper bearings.
+                    </p>
+                </div>
+            </div>
+
+            <div class="collage_grid_equal" style="margin-top: 2rem;">
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/3dprinting/ender3-assembly-cad-front.jpg', 'Creality Ender 3 Front Elevation CAD Schematic & Subsystems')">
+                        <img src="sources/3dprinting/ender3-assembly-cad-front.jpg" alt="Creality Ender 3 Front Elevation CAD Schematic" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Front Elevation Subsystems</span>
+                            <span class="caption_badge">Technical CAD</span>
+                        </div>
+                        <p class="caption_text">
+                            Labeled schematic showing filament spool feed line, Z-axis lead screw, X-axis carriage, main controller enclosure, and heated build plate.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/3dprinting/ender3-assembly-cad-iso.jpg', 'Creality Ender 3 Isometric CAD Assembly with Motion Drive Systems')">
+                        <img src="sources/3dprinting/ender3-assembly-cad-iso.jpg" alt="Creality Ender 3 Isometric CAD Assembly" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Isometric Motion Architecture</span>
+                            <span class="caption_badge">Drive &amp; Extruder</span>
+                        </div>
+                        <p class="caption_text">
+                            Isometric view illustrating hotend cooling fan assembly, part cooling duct, Bowden tube guide path, cable management clips, and bottom stepper motors.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SAFETY & WIRING CALLOUT -->
+            <div class="tech_spec_box" style="margin-top: 2rem; border-color: rgba(0, 128, 255, 0.35);">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                    <h3 class="spec_header" style="border: none; padding: 0; margin: 0;">Electrical Verification &amp; Power-On Checklist</h3>
+                    <span class="caption_badge" style="background: rgba(255, 82, 82, 0.15); color: #ff6b6b; border-color: rgba(255, 82, 82, 0.4);">Critical Safety Gate</span>
+                </div>
+                <ul class="spec_list">
+                    <li class="spec_item">
+                        <strong>Mains Voltage Selector:</strong> Verified the red mechanical rocker switch on the rear power supply unit was set to <strong>230V</strong> (UK/Europe standard). Switching while set to 115V causes instant catastrophic PSU failure.
+                    </li>
+                    <li class="spec_item">
+                        <strong>End-Stop Limit Switches:</strong> Verified keyed wiring harness connections to X, Y, and Z mechanical microswitches to ensure accurate home datum positioning during auto-homing.
+                    </li>
+                    <li class="spec_item">
+                        <strong>Cable Strain Relief &amp; Clearance:</strong> Bound the heated bed wiring bundle and ribbon cables with chassis clips to prevent snags during full 235 mm bed excursions.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 3: CALIBRATION, BED LEVELLING & Z-OFFSET -->
+        <!-- ========================================================================= -->
+        <section id="calibration" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">03 //</span>
+                <h2 class="module_title">First-Time Configuration: Bed Levelling &amp; Z-Offset</h2>
+            </div>
+            <p class="module_intro">
+                First layer adhesion is where 90% of print failures originate. The Creality Ender 3 requires manual 4-corner tramming and precise Z-offset configuration to guarantee uniform 0.20 mm bead geometry across the entire build envelope.
+            </p>
+
+            <div class="collage_grid_2col">
+                <div class="collage_card">
+                    <div class="collage_img_wrap" onclick="openLightbox('sources/3dprinting/ender3-tech-sketch-bed.jpg', 'Top-Down Technical Drawing of Ender 3 Print Bed and Gantry')">
+                        <img src="sources/3dprinting/ender3-tech-sketch-bed.jpg" alt="Ender 3 Print Bed and Gantry Engineering Sketch" loading="lazy" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Bed Tramming Geometry</span>
+                            <span class="caption_badge">4-Corner Levelling</span>
+                        </div>
+                        <p class="caption_text">
+                            Top plan technical drawing depicting heated bed surface, retention binder clips, perimeter skirt trace, and thumb wheel adjustment points.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="tech_spec_box">
+                    <h3 class="spec_header">The Thermal Paper Method</h3>
+                    <ul class="spec_list">
+                        <li class="spec_item">
+                            <strong>Step 1 &ndash; Thermal Expansion:</strong> Preheated heated bed to <strong>60&deg;C</strong> and hotend to <strong>200&deg;C</strong> via <em>Prepare &gt; Preheat PLA</em> before levelling. Leveling cold leads to nozzle scrape as metals expand when hot.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Step 2 &ndash; Auto Home &amp; Release:</strong> Initiated <em>Auto Home</em> to reset X/Y/Z end-stops, followed by <em>Disable Steppers</em> to permit smooth manual printhead translation.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Step 3 &ndash; 4-Corner Paper Drag:</strong> Positioned a standard 80 gsm sheet of A4 paper (~0.1 mm thickness) beneath the nozzle above each corner leveling screw. Adjusted thumbwheels until a subtle, consistent drag was felt.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Step 4 &ndash; Iterative Passes:</strong> Repeated corner adjustments 3 times continuously, because turning one thumbwheel shifts the opposite pivot corner.
+                        </li>
+                        <li class="spec_item">
+                            <strong>Step 5 &ndash; Z-Offset Fine Tuning:</strong> Set Z-offset to prevent nozzle scraping while ensuring adequate mechanical extrusion squish onto the build surface.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 4: EMPIRICAL CALIBRATION PRINTS -->
+        <!-- ========================================================================= -->
+        <section id="testing" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">04 //</span>
+                <h2 class="module_title">Empirical Calibration Suite &amp; Slicer Tuning</h2>
+            </div>
+            <p class="module_intro">
+                Before releasing the printer for production prints, I systematically executed three critical calibration tests in UltiMaker Cura to determine optimal filament extrusion temperature, retraction speed, and dimensional accuracy across all three axes.
+            </p>
+
+            <div class="collage_grid_3col">
+                <!-- CALIBRATION 1: TEMPERATURE TOWER -->
+                <div class="collage_card">
+                    <div class="collage_img_wrap" style="height: 360px;" onclick="openLightbox('sources/3dprinting/ender3-temp-tower.jpg', 'Empirical PLA Temperature Tower Calibration from 225C down to 185C')">
+                        <img src="sources/3dprinting/ender3-temp-tower.jpg" alt="3D Printed Temperature Tower Calibration" loading="lazy" style="height: 100%; object-fit: cover;" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Temperature Tower</span>
+                            <span class="caption_badge">190&deg;C &ndash; 225&deg;C</span>
+                        </div>
+                        <p class="caption_text">
+                            Segmented vertical tower printing horizontal bridges and overhangs at varying temperatures. Tested layer bonding and surface finish, identifying <strong>200&deg;C</strong> as the ideal sweet spot for PLA with zero sagging.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- CALIBRATION 2: RETRACTION TEST -->
+                <div class="collage_card">
+                    <div class="collage_img_wrap" style="height: 360px;" onclick="openLightbox('sources/3dprinting/ender3-retraction-test.png', 'Dual-Tower Retraction Stringing Calibration Test')">
+                        <img src="sources/3dprinting/ender3-retraction-test.png" alt="Dual Pillar Retraction Stringing Calibration Print" loading="lazy" style="height: 100%; object-fit: cover;" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Retraction &amp; Stringing</span>
+                            <span class="caption_badge">5.5 mm @ 45 mm/s</span>
+                        </div>
+                        <p class="caption_text">
+                            Dual-pillar test analyzing microscopic stringing across open gaps. Diagnosed nozzle pressure drop and tuned Bowden retraction distance to <strong>5.5 mm at 45 mm/s</strong>, completely eliminating wisps and ooze.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- CALIBRATION 3: BED PRINT / CUBE -->
+                <div class="collage_card">
+                    <div class="collage_img_wrap" style="height: 360px;" onclick="openLightbox('sources/3dprinting/ender3-bed-calibration.jpg', '20x20x20 mm Calibration Print on Ender 3 Heated Bed with Skirt Trace')">
+                        <img src="sources/3dprinting/ender3-bed-calibration.jpg" alt="Calibration Print on Creality Ender 3 Build Plate" loading="lazy" style="height: 100%; object-fit: cover;" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Calibration Print &amp; Bed</span>
+                            <span class="caption_badge">Vernier Tolerance</span>
+                        </div>
+                        <p class="caption_text">
+                            Precision calibration print directly on the Creality Ender 3 bed. Measured with vernier calipers to confirm X, Y, and Z dimensional accuracy within <strong>&plusmn;0.05 mm</strong> tolerance of theoretical target.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CURA SLICER PROFILE PARAMETERS -->
+            <div class="tech_spec_box" style="margin-top: 2.5rem;">
+                <h3 class="spec_header">UltiMaker Cura Calibrated Slicer Profile</h3>
+                <div style="overflow-x: auto;">
+                    <table class="troubleshoot_table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Calibrated Value</th>
+                                <th>Technical Rationale</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Layer Height</strong></td>
+                                <td>0.20 mm Standard Quality</td>
+                                <td>Optimal equilibrium between vertical feature resolution, print time, and layer-to-layer bond strength.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hotend Temperature</strong></td>
+                                <td>200 &deg;C (Initial Layer 205 &deg;C)</td>
+                                <td>Determined via temperature tower to guarantee complete filament melt without thermal polymer degradation or stringing.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Heated Bed Temperature</strong></td>
+                                <td>60 &deg;C Constant</td>
+                                <td>Maintains PLA polymer above its glass transition temperature (~55&deg;C&ndash;60&deg;C) to eliminate thermal contraction corner curl.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Print &amp; Wall Speed</strong></td>
+                                <td>50 mm/s (Outer Wall: 30 mm/s)</td>
+                                <td>Slow outer shell velocity minimizes centrifugal corner ringing and ghosting caused by gantry momentum.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Retraction Settings</strong></td>
+                                <td>5.5 mm Distance / 45 mm/s Speed</td>
+                                <td>Mitigates Bowden tube pneumatic hysteresis, preventing molten filament drool across rapid travel moves.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Infill Pattern &amp; Density</strong></td>
+                                <td>20% Grid / Gyroid</td>
+                                <td>Balances internal structural compressive resistance with rapid cycle times and low material consumption.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Build Plate Adhesion</strong></td>
+                                <td>Skirt (3 Lines, 4 mm Offset)</td>
+                                <td>Primes extruder nozzle and permits visual verification of bed tramming before laying the primary model footprint.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 5: END-TO-END PROOF OF SETUP (PERSONAL PRINTS) -->
+        <!-- ========================================================================= -->
+        <section id="end-to-end" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">05 //</span>
+                <h2 class="module_title">End-to-End Proof of Setup: Figure Prints</h2>
+            </div>
+            <p class="module_intro">
+                To test the printer through a full, end-to-end production workflow, I printed complex organic figures requiring multi-axis support structures, continuous curvature slicing, overhang bridging, and delicate post-processing.
+            </p>
+
+            <div class="collage_grid_equal">
+                <div class="collage_card">
+                    <div class="collage_img_wrap" style="height: 480px;" onclick="openLightbox('sources/3dprinting/ender3-mew-print.jpg', 'Personal Mew 3D Print - Full End-to-End Calibration Test')">
+                        <img src="sources/3dprinting/ender3-mew-print.jpg" alt="Mew 3D Print on Desk" loading="lazy" style="height: 100%; object-fit: cover;" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Personal Mew Figure</span>
+                            <span class="caption_badge">Full End-to-End Test</span>
+                        </div>
+                        <p class="caption_text">
+                            Custom sleeping Mew model printed in white PLA, designed to drape over a desk ledge. Validated smooth organic double-curvature rendering, cantilevered tail strength, overhang adhesion, and clean support detachment.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="collage_card">
+                    <div class="collage_img_wrap" style="height: 480px;" onclick="openLightbox('sources/3dprinting/ender3-squirtle-print.jpg', 'Purple Squirtle 3D Print Miniature')">
+                        <img src="sources/3dprinting/ender3-squirtle-print.jpg" alt="Squirtle 3D Print Miniature" loading="lazy" style="height: 100%; object-fit: cover;" />
+                        <div class="zoom_overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                            <span>Click to Zoom</span>
+                        </div>
+                    </div>
+                    <div class="collage_caption">
+                        <div class="caption_title">
+                            <span>Squirtle Character Model</span>
+                            <span class="caption_badge">Curvature &amp; Infill</span>
+                        </div>
+                        <p class="caption_text">
+                            Printed with lavender purple PLA filament. Verified dome top layer closure without pillowing, fine facial detail reproduction, and sturdy structural limb cohesion at 0.2 mm layer resolution.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 6: LEADERSHIP & SYSTEMATIC TROUBLESHOOTING -->
+        <!-- ========================================================================= -->
+        <section id="leadership" class="module_wrap">
+            <div class="module_header">
+                <span class="module_num">06 //</span>
+                <h2 class="module_title">Leadership, Team Coordination &amp; Troubleshooting Guide</h2>
+            </div>
+            <p class="module_intro">
+                Engineering excellence requires both technical execution and collaborative accountability. As team leader, I resolved team engagement roadblocks while authoring an actionable diagnostic framework for common 3D printing anomalies.
+            </p>
+
+            <!-- LEADERSHIP CALLOUT -->
+            <div class="leadership_box">
+                <div class="leadership_title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-cyan);">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Team Leadership &amp; Project Orchestration</span>
+                </div>
+                <p class="leadership_p">
+                    During the initial phase of the project, participation among team members was inconsistent, threatening deliverable milestones and calibration quality. Recognizing the risk, I stepped forward as Team Leader:
+                </p>
+                <ul class="spec_list" style="margin-bottom: 1.5rem;">
+                    <li class="spec_item">
+                        <strong>Direct Communication &amp; Follow-Up:</strong> Contacted disengaged teammates individually to identify hurdles, clarify expectations, and rebuild momentum without creating friction.
+                    </li>
+                    <li class="spec_item">
+                        <strong>Role Specialization &amp; Work Breakdown:</strong> Restructured the workflow into distinct, actionable packages (mechanical chassis assembly, Cura slicer optimization, slide synthesis, calibration documentation).
+                    </li>
+                    <li class="spec_item">
+                        <strong>Collaborative Hands-On Sessions:</strong> Led interactive in-person tuning sessions at the printer workbench, ensuring all team members gained direct experience in manual bed leveling and printer control.
+                    </li>
+                </ul>
+                <div class="leadership_quote">
+                    "Outcome: The re-energized team coordinated seamlessly to deliver an outstanding presentation guide and fully calibrated prints, achieving a high distinction score for the group."
+                </div>
+            </div>
+
+            <!-- TROUBLESHOOTING MATRIX -->
+            <div class="tech_spec_box">
+                <h3 class="spec_header">8-Point FDM Printing Diagnostic &amp; Troubleshooting Guide</h3>
+                <p style="font-family: var(--ff1); font-size: 0.95rem; color: rgba(255,255,255,0.75); margin: 0;">
+                    Synthesized into our presentation guide to help novice operators rapidly isolate and resolve real-world print defects:
+                </p>
+                <div style="overflow-x: auto;">
+                    <table class="troubleshoot_table">
+                        <thead>
+                            <tr>
+                                <th>Defect / Symptom</th>
+                                <th>Probable Root Causes</th>
+                                <th>Systematic Corrective Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="symptom_badge">
+                                        <span class="symptom_dot"></span>
+                                        <span>Print Not Sticking to Bed</span>
+                                    </span>
+                                </td>
+                                <td>Bed unlevelled, nozzle Z-offset too high, bed too cold, oils on build plate.</td>
+                                <td><span class="fix_badge">Action:</span> Re-level bed using paper drag at 60&deg;C. Decrease Z-offset. Clean build plate with Isopropyl Alcohol (IPA).</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="symptom_badge">
+                                        <span class="symptom_dot"></span>
+                                        <span>Stringing &amp; Oozing</span>
+                                    </span>
+                                </td>
+                                <td>Nozzle temperature excessive, insufficient retraction distance or travel speed.</td>
+                                <td><span class="fix_badge">Action:</span> Drop nozzle temperature by 5&deg;C. Increase retraction to 5.0&ndash;6.0 mm at 45 mm/s. Run temp tower.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="symptom_badge">
+                                        <span class="symptom_dot"></span>
+                                        <span>Clogged / Jammed Nozzle</span>
+                                    </span>
+                                </td>
+                                <td>Particulate in filament, heat creep in cold end, improper feed temp.</td>
+                                <td><span class="fix_badge">Action:</span> Heat hotend to 220&deg;C and perform a cold pull. Clean nozzle with acupuncture needle or replace 0.4mm brass nozzle.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="symptom_badge">
+                                        <span class="symptom_dot"></span>
+                                        <span>Layer Shifting</span>
+                                    </span>
+                                </td>
+                                <td>Loose X or Y timing belt, excessive acceleration, toolhead collision.</td>
+                                <td><span class="fix_badge">Action:</span> Tension timing belts until resonant. Reduce print speed from 60 mm/s to 45 mm/s. Check stepper driver Vrefs.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="symptom_badge">
+                                        <span class="symptom_dot"></span>
+                                        <span>Warping / Lifting Corners</span>
+                                    </span>
+                                </td>
+                                <td>Ambient drafts, bed temperature insufficient, lack of brim adhesion.</td>
+                                <td><span class="fix_badge">Action:</span> Raise bed temperature to 60&ndash;65&deg;C. Add a 5 mm brim in Cura. Shield printer from room drafts.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="symptom_badge">
+                                        <span class="symptom_dot"></span>
+                                        <span>Under-Extrusion</span>
+                                    </span>
+                                </td>
+                                <td>Extruder arm tension arm slipping, partially blocked nozzle, low print temp.</td>
+                                <td><span class="fix_badge">Action:</span> Inspect extruder idler spring tension. Check Bowden tube seating against heatbreak. Increase temp 5&deg;C.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="symptom_badge">
+                                        <span class="symptom_dot"></span>
+                                        <span>Elephant's Foot</span>
+                                    </span>
+                                </td>
+                                <td>Nozzle spaced too close to bed, bed temperature excessive causing base sag.</td>
+                                <td><span class="fix_badge">Action:</span> Slightly raise Z-offset. Lower bed temperature to 55&deg;C after first layer. Enable Cura initial layer horizontal expansion.</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="symptom_badge">
+                                        <span class="symptom_dot"></span>
+                                        <span>Rough Outer Surfaces</span>
+                                    </span>
+                                </td>
+                                <td>Layer height excessive, loose V-slot roller eccentric nuts, over-extrusion.</td>
+                                <td><span class="fix_badge">Action:</span> Reduce layer height to 0.15&ndash;0.2 mm. Tighten eccentric spacers on gantry wheels to eliminate play.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- MODULE 7: ATTACHED PRESENTATION VIEWER & DOWNLOAD -->
+        <!-- ========================================================================= -->
+        <section id="presentation" class="module_wrap" style="text-align: center; background: rgba(0, 128, 255, 0.03); border: 1px solid rgba(0, 128, 255, 0.2); border-radius: 24px; padding: 4rem 2rem;">
+            <div class="caption_badge" style="margin-bottom: 1.25rem;">Complete 21-Slide Beginner's Course &amp; Guide</div>
+            <h2 style="font-family: var(--ff2); font-size: clamp(2.2rem, 4vw, 3.2rem); text-transform: uppercase; color: #ffffff; margin: 0 0 1rem 0;">Download 3D Printing Guide Presentation</h2>
+            <p style="font-family: var(--ff1); font-size: 1.1rem; color: rgba(255, 255, 255, 0.8); max-width: 44rem; margin: 0 auto 2.5rem auto; line-height: 1.75;">
+                Access the original PowerPoint slide deck created for Queen's University Belfast, covering unboxing, mechanical frame squaring, 230V electrical checks, bed tramming, UltiMaker Cura slicing, calibration towers, and troubleshooting matrices.
+            </p>
+
+            <div style="display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap;">
+                <a href="sources/3dprinting/Creality_Ender_3_Beginners_Guide.pptx" download="Creality_Ender_3_Beginners_Guide.pptx" class="resume_download_btn" style="padding: 1rem 2.5rem; font-size: 1rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Download Full Presentation (.PPTX, 8.2 MB)</span>
+                </a>
+            </div>
+
+            <div style="margin-top: 2rem; font-family: var(--ff1); font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
+                Project Authors: Anvay, Shuban Singh Singraur, and Julius &bull; Queen's University Belfast
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="case_footer">
+            <div style="font-family: var(--ff1); font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
+                &copy; Shuban Singh Singraur &bull; Creality Ender 3 Setup &amp; Calibration Case Study
+            </div>
+            <div class="case_footer_links">
+                <a href="drone-project.html" class="case_footer_link">&larr; Previous: Quadcopter Drone CAD</a>
+                <a href="hill-climb-project.html" class="case_footer_link">Hill Climb Vehicle</a>
+                <a href="index.html#projects" class="case_footer_link">Portfolio Projects</a>
+                <a href="index.html#top" class="case_footer_link">&uarr; Back to Top</a>
+            </div>
+        </footer>
+    </main>
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightboxModal" class="lightbox_modal" onclick="closeLightbox(event)">
+        <div class="lightbox_content" onclick="event.stopPropagation()">
+            <button class="lightbox_close_btn" onclick="closeLightbox()" title="Close">&times;</button>
+            <img id="lightboxImg" class="lightbox_img" src="" alt="Enlarged view" />
+            <div id="lightboxCaption" class="lightbox_caption_bar"></div>
+        </div>
+    </div>
+
+    <script>
+        function openLightbox(src, caption) {
+            var modal = document.getElementById('lightboxModal');
+            var img = document.getElementById('lightboxImg');
+            var cap = document.getElementById('lightboxCaption');
+            img.src = src;
+            cap.innerText = caption;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            var modal = document.getElementById('lightboxModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>
