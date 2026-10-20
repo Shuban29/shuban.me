@@ -1,0 +1,420 @@
+/* ==========================================================================
+   SHUBAN SINGH SINGRAUR - PORTFOLIO SECURITY GATE
+   Aerospace-Grade Aesthetic Passcode Protection
+   ========================================================================== */
+
+/* PREVENT FLASH OF UNLOCKED CONTENT (FOUC) */
+html.portfolio-locked,
+html.portfolio-locked body {
+    height: 100% !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+html.portfolio-locked .page_wrap,
+html.portfolio-locked main,
+html.portfolio-locked header,
+html.portfolio-locked footer,
+html.portfolio-locked nav,
+html.portfolio-locked .project-container,
+html.portfolio-locked .project-hero,
+html.portfolio-locked .section,
+html.portfolio-locked #preloader {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    filter: blur(12px) !important;
+    transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+/* OVERLAY BACKDROP */
+#portfolio-gate-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 2147483647 !important;
+    background-color: #050614 !important;
+    background-image: 
+        radial-gradient(circle at 50% 28%, rgba(0, 128, 255, 0.16) 0%, transparent 65%),
+        radial-gradient(circle at 80% 80%, rgba(0, 229, 255, 0.08) 0%, transparent 50%),
+        linear-gradient(rgba(0, 128, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 128, 255, 0.04) 1px, transparent 1px) !important;
+    background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 1.5rem !important;
+    box-sizing: border-box !important;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#portfolio-gate-overlay.gate-closing {
+    opacity: 0 !important;
+    transform: scale(1.03) !important;
+    pointer-events: none !important;
+}
+
+#portfolio-gate-overlay.gate-hidden {
+    display: none !important;
+}
+
+/* AMBIENT RADAR SCANNER EFFECT */
+.gate-scanner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #0080ff, #00e5ff, #0080ff, transparent);
+    opacity: 0.65;
+    animation: gateScanLine 5s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes gateScanLine {
+    0% { transform: translateY(0); opacity: 0.3; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(100vh); opacity: 0.3; }
+}
+
+/* CARD CONTAINER */
+#portfolio-gate-card {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    background: rgba(8, 14, 32, 0.88);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(0, 128, 255, 0.28);
+    box-shadow: 
+        0 25px 60px -15px rgba(0, 0, 0, 0.85),
+        0 0 50px rgba(0, 128, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem 2.25rem 2.25rem;
+    box-sizing: border-box;
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Athletics', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transform: translateY(0);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+@media (max-width: 480px) {
+    #portfolio-gate-card {
+        padding: 2rem 1.5rem 1.75rem;
+    }
+}
+
+/* STATUS PILL BADGE */
+.gate-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(0, 128, 255, 0.08);
+    border: 1px solid rgba(0, 128, 255, 0.25);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7bb5ff;
+    margin-bottom: 1.5rem;
+}
+
+.gate-status-pill.unlocked {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #34d399;
+}
+
+.gate-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #0080ff;
+    box-shadow: 0 0 8px #0080ff;
+    animation: gatePulseDot 2s infinite ease-in-out;
+}
+
+.gate-status-pill.unlocked .gate-status-dot {
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+}
+
+@keyframes gatePulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* HOLOGRAM EMBLEM */
+.gate-emblem-wrap {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 1.25rem auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gate-emblem-halo {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px dashed rgba(0, 128, 255, 0.35);
+    animation: gateRotateHalo 14s linear infinite;
+}
+
+@keyframes gateRotateHalo {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.gate-emblem-inner {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(0, 128, 255, 0.25), rgba(0, 40, 120, 0.5));
+    border: 1px solid rgba(0, 128, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00e5ff;
+    box-shadow: 0 0 24px rgba(0, 128, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+#portfolio-gate-card.success .gate-emblem-inner {
+    background: radial-gradient(circle at 35% 35%, rgba(16, 185, 129, 0.25), rgba(6, 78, 59, 0.5));
+    border-color: rgba(16, 185, 129, 0.6);
+    color: #34d399;
+    box-shadow: 0 0 28px rgba(16, 185, 129, 0.45);
+}
+
+/* TYPOGRAPHY */
+.gate-title {
+    font-family: 'Tuskergrotesk', Impact, 'Arial Black', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.gate-subtitle {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.5;
+    margin: 0 auto 1.75rem auto;
+    max-width: 320px;
+}
+
+/* FORM ELEMENTS */
+.gate-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.gate-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.gate-input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(0, 128, 255, 0.7);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    transition: color 0.25s ease;
+}
+
+.gate-input {
+    width: 100%;
+    padding: 0.95rem 2.85rem 0.95rem 2.75rem;
+    background: rgba(3, 7, 20, 0.65);
+    border: 1px solid rgba(0, 128, 255, 0.25);
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #ffffff;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+    letter-spacing: 0.04em;
+}
+
+.gate-input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: normal;
+}
+
+.gate-input:focus {
+    border-color: #0080ff;
+    background: rgba(3, 7, 20, 0.85);
+    box-shadow: 0 0 20px rgba(0, 128, 255, 0.35), inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.gate-input-wrapper:focus-within .gate-input-icon {
+    color: #00e5ff;
+}
+
+.gate-input.input-error {
+    border-color: #ef4444 !important;
+    background: rgba(40, 10, 15, 0.6) !important;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* TOGGLE PASSWORD VISIBILITY */
+.gate-toggle-visibility {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0.35rem;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: color 0.2s ease;
+}
+
+.gate-toggle-visibility:hover {
+    color: #ffffff;
+}
+
+/* ERROR MESSAGE */
+.gate-error-banner {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.65rem 0.85rem;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: 8px;
+    color: #fca5a5;
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-align: center;
+    animation: gateFadeIn 0.25s ease forwards;
+}
+
+.gate-error-banner.visible {
+    display: flex;
+}
+
+@keyframes gateFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* SUBMIT BUTTON */
+.gate-submit-btn {
+    width: 100%;
+    padding: 0.95rem 1.5rem;
+    background: linear-gradient(135deg, #0080ff 0%, #0056d6 100%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    box-shadow: 0 8px 24px -4px rgba(0, 128, 255, 0.45);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.gate-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -4px rgba(0, 128, 255, 0.65), 0 0 20px rgba(0, 229, 255, 0.3);
+    background: linear-gradient(135deg, #0a8aff 0%, #0060ea 100%);
+}
+
+.gate-submit-btn:active {
+    transform: translateY(0);
+}
+
+.gate-submit-btn.success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    border-color: rgba(16, 185, 129, 0.5) !important;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4) !important;
+}
+
+/* REMEMBER CHECKBOX ROW */
+.gate-options-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    user-select: none;
+    cursor: pointer;
+    margin-top: 0.25rem;
+}
+
+.gate-options-row input[type="checkbox"] {
+    accent-color: #0080ff;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+}
+
+/* SHAKE ANIMATION FOR ERROR */
+.gate-shake {
+    animation: gateShakeAnim 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes gateShakeAnim {
+    10%, 90% { transform: translate3d(-2px, 0, 0); }
+    20%, 80% { transform: translate3d(4px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+    40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+/* QUICK RE-LOCK BUTTON FOR USER CONVENIENCE */
+.portfolio-relock-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.portfolio-relock-btn:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.35);
+    color: #fca5a5;
+}
